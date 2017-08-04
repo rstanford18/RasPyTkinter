@@ -16,6 +16,7 @@ from LaunchPad import LaunchMain       as lm
 from DataLayer import MainObjectDataHandler
 from Climate   import ClimateMain       as cm
 
+from Camera import CameraView as camv
 ################################################################################
 class SystemInfo():
     
@@ -94,7 +95,9 @@ class NavigationManager(Frame):
     
     def showClimatePage(self):
         self.showFrame(cm)
-        
+    
+    def showCameraPage(self):
+        self.showFrame(camv)     
 ################################################################################ 
 class Launch():
     

@@ -34,13 +34,17 @@ PasswordFMT = 'rtsp://','admin:steritec@','192.168.6.103/Streaming/Channels/1'
 
 ActiveCameras = {
                 'BankOfAmerica':{
-                                'url':'http://72.48.229.3:8887/mjpg/video.mjpg',
+                                'url':'http://72.48.229.3',
+                               'port':'8887',
+                               'path':'/mjpg/video.mjpg',                           
                                'user':'',
-                               'pass':''},
+                               'passw':''},
              'SteritecSecurity':{
-                                'url':'rtsp://192.168.6.103/Streaming/Channels/1',
+                                'url':'rtsp://192.168.6.103',
+                               'port':'',
+                               'path':'/Streaming/Channels/1',
                                'user':'admin',
-                               'pass':'steritec'}
+                               'passw':'steritec'}
                                }
 
 

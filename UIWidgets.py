@@ -20,7 +20,9 @@ class LaunchPadBtn():
         
         if self.value == 2:
             self.parent.nav.showClimatePage()
-
+        
+        if self.value == 3:
+            self.parent.nav.showCameraPage()   
                   
     def buttonClrEnter(self, event):
         event.widget.config(bg='#B1B8FF', fg='black')

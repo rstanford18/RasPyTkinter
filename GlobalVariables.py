@@ -30,6 +30,20 @@ AlarmArmed = False
 CountDownToAlarm = 30
 CountDownState = None
 
+PasswordFMT = 'rtsp://','admin:steritec@','192.168.6.103/Streaming/Channels/1'
+
+ActiveCameras = {
+                'BankOfAmerica':{
+                                'url':'http://72.48.229.3:8887/mjpg/video.mjpg',
+                               'user':'',
+                               'pass':''},
+             'SteritecSecurity':{
+                                'url':'rtsp://192.168.6.103/Streaming/Channels/1',
+                               'user':'admin',
+                               'pass':'steritec'}
+                               }
+
+
 
 piFactoryXConnect = {
                    'localhost':'localhost',

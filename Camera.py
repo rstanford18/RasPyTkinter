@@ -43,7 +43,7 @@ class Camera(tk.Frame):
         self.panel.after(100, self.loader)
 
 
-
+###
 
 class CameraStream():
     

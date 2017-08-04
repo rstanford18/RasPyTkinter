@@ -6,7 +6,7 @@ import GlobalVariables as gv
 import GlobalFunctions as gf
 frame1 = None
 
-class Cam(tk.Frame):
+class Camera(tk.Frame):
     
     def __init__(self, parent):
         tk.Frame.__init__(self, parent) 
@@ -43,7 +43,7 @@ class Cam(tk.Frame):
         self.panel.after(100, self.loader)
 
 
-
+###
 
 class CameraStream():
     

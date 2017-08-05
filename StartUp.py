@@ -14,8 +14,10 @@ from Login     import LoginPage        as lp
 from LaunchPad import LaunchMain       as lm
 from DataLayer import MainObjectDataHandler
 from Climate   import ClimateMain       as cm
-
+from admin_launchpad import AdminLaunchPad as adm
+from admin_camera_cfg import AdminCameraCfg as acc
 from Camera import CameraView as camv
+
 ################################################################################
 class SystemInfo():
     
@@ -118,6 +120,12 @@ class NavigationManager(tk.Frame):
     
     def showCameraPage(self):
         self.showFrame(camv)
+    
+    def showAdminPage(self):
+        self.showFrame(adm)
+    
+    def showAdminCameraPage(self):    
+        self.showFrame(acc)
              
 ################################################################################ 
 class Launch():

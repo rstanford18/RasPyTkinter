@@ -2,6 +2,7 @@ from tkinter import Frame,Label,BOTH,Text
 import GlobalVariables as gv
 import GlobalFunctions as gf
 
+##############################################################################
 class LaunchPadBtn():
     def __init__(self, parent, name, value, x, y):
         
@@ -22,16 +23,51 @@ class LaunchPadBtn():
             self.parent.nav.showClimatePage()
         
         if self.value == 3:
-            self.parent.nav.showCameraPage()   
-                  
+            self.parent.nav.showCameraPage()
+       
+        if self.value == 6: 
+            self.parent.nav.showAdminPage() 
+                 
     def buttonClrEnter(self, event):
         event.widget.config(bg='#B1B8FF', fg='black')
     
     def buttonClrLeave(self, event):
         event.widget.config(bg=gv.bckGround, fg='#B1B8FF')
 
+##############################################################################
+class AdminLaunchPadBtn():
+    def __init__(self, parent, name, value, x, y):
+        
+        self.value    = value
+        self.parent   = parent
+        self.keyName  = name
+        self.admClr   = '#0976FF'
+        self.B1       = make_AdminLaunchPadBtns(parent, self, x, y, 220,220, 
+                                    self.handleBtnFuncRoute, text=name, 
+                                    fg=self.admClr, bg=gv.bckGround, 
+                                    font=gv.LARGE_FONT)
+      
+    def handleBtnFuncRoute(self, event):
+              
+        if self.value == 1:
+            self.parent.nav.showAdminCameraPage()
+        
+        if self.value == 2:
+            print('')
+        
+        if self.value == 3:
+            print('')
+       
+        if self.value == 6: 
+            print('') 
+                 
+    def buttonClrEnter(self, event):
+        event.widget.config(bg=self.admClr, fg='black')
+    
+    def buttonClrLeave(self, event):
+        event.widget.config(bg=gv.bckGround, fg=self.admClr)
 
-
+##############################################################################
 class keyBtn():
     def __init__(self, parent, name, value, x, y):
         
@@ -73,7 +109,7 @@ class keyBtn():
     def buttonClrLeave(self, event):
         event.widget.config(bg=gv.bckGround, fg='orange')
         
-               
+ ##############################################################################              
 def make_label(master, x, y, w, h, *args, **kwargs):
     f = Frame(master, height=h, width=w)
     f.pack_propagate(0) # don't shrink
@@ -83,7 +119,8 @@ def make_label(master, x, y, w, h, *args, **kwargs):
     return label
 
 def make_button(master, x, y, w, h, action, *args, **kwargs):
-    f = Frame(master, height=h, width=w, highlightbackground="#00FF00", highlightcolor="#00FF00", highlightthickness=1,)
+    f = Frame(master, height=h, width=w, highlightbackground="#00FF00", 
+              highlightcolor="#00FF00", highlightthickness=1,)
     f.pack_propagate(0) # don't shrink
     f.place(x=x, y=y)
     button = Label(f, *args, **kwargs)
@@ -95,7 +132,8 @@ def make_button(master, x, y, w, h, action, *args, **kwargs):
 
 def make_LaunchPadButtons(master, parent, x, y, w, h, action, *args, **kwargs):
 
-    f = Frame(master, height=h, width=w, highlightbackground='#B1B8FF', highlightcolor='#B1B8FF', highlightthickness=1,)
+    f = Frame(master, height=h, width=w, highlightbackground='#B1B8FF',
+               highlightcolor='#B1B8FF', highlightthickness=1,)
     f.pack_propagate(0) # don't shrink
     f.place(x=x, y=y)
     button = Label(f, *args, **kwargs)
@@ -105,9 +143,25 @@ def make_LaunchPadButtons(master, parent, x, y, w, h, action, *args, **kwargs):
     button.pack(fill=BOTH, expand=1)
     return button
 
+
+def make_AdminLaunchPadBtns(master, parent, x, y, w, h, action, *args, **kwargs):
+
+    f = Frame(master, height=h, width=w, highlightbackground=parent.admClr,
+               highlightcolor=parent.admClr, highlightthickness=1,)
+    f.pack_propagate(0) # don't shrink
+    f.place(x=x, y=y)
+    button = Label(f, *args, **kwargs)
+    button.bind('<ButtonPress-1>', action)
+    button.bind('<Any-Enter>', parent.buttonClrEnter)
+    button.bind('<Any-Leave>', parent.buttonClrLeave)
+    button.pack(fill=BOTH, expand=1)
+    return button
+
+
 def make_keyPad(master, parent, x, y, w, h, action, *args, **kwargs):
 
-    f = Frame(master, height=h, width=w, highlightbackground="orange", highlightcolor="orange", highlightthickness=1,)
+    f = Frame(master, height=h, width=w, highlightbackground="orange", 
+              highlightcolor="orange", highlightthickness=1,)
     f.pack_propagate(0) # don't shrink
     f.place(x=x, y=y)
     button = Label(f, *args, **kwargs)
@@ -126,7 +180,8 @@ def make_keyPadEntry(master, x, y, w, h, *args, **kwargs):
     return button
 
 def make_OpenCloseBtn(master, x, y, w, h, action, *args, **kwargs):
-    f = Frame(master, height=h, width=w, highlightbackground="white", highlightcolor="white", highlightthickness=1,)
+    f = Frame(master, height=h, width=w, highlightbackground="white", 
+              highlightcolor="white", highlightthickness=1,)
     f.pack_propagate(0) # don't shrink
     f.place(x=x, y=y)
     button = Label(f, *args, **kwargs)

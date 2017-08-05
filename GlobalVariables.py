@@ -38,15 +38,32 @@ ActiveCameras = {
                                'port':'8887',
                                'path':'/mjpg/video.mjpg',                           
                                'user':'',
-                               'passw':''},
+                               'passw':'',
+                               'enabled':True},
              'SteritecSecurity':{
                                 'url':'rtsp://192.168.6.103',
                                'port':'',
                                'path':'/Streaming/Channels/1',
                                'user':'admin',
-                               'passw':'steritec'}
-                               }
+                               'passw':'steritec',
+                             'enabled':False},
+            'Doggy Day Care':{
+                                'url':'http://tails-waipio.viewnetcam.com',
+                               'port':'50002',
+                               'path':'/nphMotionJpeg?Resolution=640x480&Quality=Clarity',
+                               'user':'',
+                               'passw':'',
+                             'enabled':True},
 
+            'FlaKK Rorvic Ferry':{
+                                'url':'http://193.213.13.69',
+                               'port':'',
+                               'path':'/mjpg/video.mjpg',
+                               'user':'',
+                               'passw':'',
+                             'enabled':True},
+                 
+                               }
 
 
 piFactoryXConnect = {

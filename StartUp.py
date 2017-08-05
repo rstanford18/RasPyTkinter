@@ -4,7 +4,7 @@ import GlobalVariables as gv
 import CfgEnviroment as envir
 envir.defineEnviroment()
  
-isGPIOOn = True
+isGPIOOn = False
 if isGPIOOn:
     import GPIOThreadClass as tb
     
@@ -97,7 +97,8 @@ class NavigationManager(Frame):
         self.showFrame(cm)
     
     def showCameraPage(self):
-        self.showFrame(camv)     
+        self.showFrame(camv)
+             
 ################################################################################ 
 class Launch():
     

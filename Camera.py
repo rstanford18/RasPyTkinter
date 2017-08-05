@@ -10,7 +10,7 @@ from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
 
 
-
+##############################################################################  
 class CameraView(tk.Frame):
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
@@ -43,8 +43,7 @@ class CameraView(tk.Frame):
                 break
     
     def han_init_frame_grid(self):
-        print('camlen',self.camListLen)
-        for i in range(0,self.gridSize):
+        for i in range(0, self.camListLen):
             geoDict = self.han_grid_spacing(self.gridSize,i, self.ux.sw, self.ux.sh)
             h = geoDict['h']
             w = geoDict['w']
@@ -55,9 +54,8 @@ class CameraView(tk.Frame):
                             highlightcolor="#00FF00", highlightthickness=1,)
             f.pack_propagate(0) # don't shrink
             f.place(x=x, y=y)
-            print('in loop',self.camList[i].camName)
-            pnl.pack(side="bottom", fill="both", expand="yes")
-        
+            self.camList[i].han_start_stream(f)
+                  
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
         
@@ -66,13 +64,7 @@ class CameraView(tk.Frame):
             spacingDict[0] = {'x':0,'y':0,'w':w,'h':h}
             return spacingDict[0]
         
-        
-        gridSizeCfg = [1,2,4,6,8,12,16]
-        gridDict    = {1:(0,0), 4:(2,2), 8:(4,2), 12:(4,3), 16:(4,4)}
-        
-        
-        
-        c, r = gridDict[size]
+        c, r = self.gridDict[size]
         
         objW = int(w/c)
         objH = int(h/r)
@@ -85,16 +77,14 @@ class CameraView(tk.Frame):
                 x = i*objW
                 spacingDict[item] = {'x':x,'y':y,'w':w,'h':objH}
                 item += 1
-        
-        #print(spacingDict[item])   
+ 
         return spacingDict[itemCount]
-        
-        
-class CameraFactory(tk.Frame):
+
+##############################################################################         
+class CameraFactory():
     
     def __init__(self, parent):
         
-        tk.Frame.__init__(self, parent)
         self.parent  = parent
         self.camList = []
         self.han_init_ooe()
@@ -110,60 +100,56 @@ class CameraFactory(tk.Frame):
         self.activeCams =  self.get_active_cameras()
         
         for i in self.activeCams:
-             cam = CameraElementMeta(self, i, self.activeCams[i])
-             self.camList.append(cam)
-    
-    
-    
-    
-class CameraElementMeta(tk.Frame):
+            if self.activeCams[i].get('enabled', False):
+                cam = CameraElementMeta(self, i, self.activeCams[i])
+                self.camList.append(cam)
+      
+##############################################################################      
+class CameraElementMeta():
     
     def __init__(self, parent, camName, camDict):
-        tk.Frame.__init__(self, parent) 
         self.parent = parent
         self.camName = camName
         self.camDict = camDict
         self.han_activate_stream()
         self.img = None
-        self.parent.after(200, self.han_init_ooe)
+        
+        self.frame = None
     
     def han_init_ooe(self):
         self.get_init_img()
+          
+    def han_start_stream(self, frame):
+        self.frame = frame
         self.han_init_cam_panel() 
-        self.han_panel_stream()
-       
+        self.han_panel_stream()      
+           
     def han_activate_stream(self):
         self.camThread = CameraStream(self.camName, self.camDict)
     
     def get_active_frame(self):        
         return self.camThread.cImgFrame
-    
-    
+      
     def get_init_img(self):
         try:
             img      = cv2.cvtColor(self.get_active_frame(), cv2.COLOR_BGR2RGB)
             img      = Image.fromarray(img)
             self.img = ImageTk.PhotoImage(img)
-        except:
-            print('failed')
+        except cv2.error as e:
+            print('')
     
-    def han_init_cam_panel(self):
-            
-        self.panel = tk.Label(self.parent, image=self.img)
+    def han_init_cam_panel(self):         
+        self.panel = tk.Label(self.frame, image=self.img, bg=gv.bckGround)
         self.panel.pack(side="bottom", fill="both", expand="yes")
-    
-     
+        
     def han_panel_stream(self):
         self.get_init_img()
         self.panel.configure(image=self.img)
         self.panel.image = self.img
         self.panel._backbuffer_ = self.img
-        print('hum repeater', self.camName)
         self.panel.after(100, self.han_panel_stream)
-    
-    def printTest(self):
-        print('here is muh print testttttt')
 
+##############################################################################  
 class CameraStream():
       
     def __init__(self, cameraName, camDict):        
@@ -209,20 +195,10 @@ class CameraStream():
             try:
                 ret, frame = cap.read()
                 keepAlive = ret
-            except:
+            except cv2.error as e:
                 pass
-           # print(frame)
+
             self.cImgFrame = frame
-            
-            #cv2.imshow('Video', frame)
             if cv2.waitKey(1) == 27:
                 exit(0)
         print('Camera:',self.camName,'Thread State:','Dead')
-
-
-
-# root = tk.Tk() 
-# cam = CameraView('SteritecSecurity', root)   
-# #root.bind("<Return>", callback)
-# root.mainloop()
-

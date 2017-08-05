@@ -168,12 +168,12 @@ class CameraStream():
         self.k.start()
     
     def get_connecting_img(self):
-        img = Image.open("C:\\Users\\RaymondS\\git\\connecting.jpg").convert("L")
+        img = Image.open("connecting.jpg").convert("L")
         arr = numpy.array(img)
         self.connectingImg = arr
       
     def get_failed_img(self):
-        img = Image.open("C:\\Users\\RaymondS\\git\\offline.jpg").convert("L")
+        img = Image.open("offline.jpg").convert("L")
         arr = numpy.array(img)
         self.failedImg = arr
            

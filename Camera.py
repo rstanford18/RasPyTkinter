@@ -14,7 +14,7 @@ from MenuBar import MainMenuBar as mb
 class CameraView(tk.Frame):
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-
+##
         self.parent      = parent       
         self.nav         = nav
         self.mb          = mb(self)

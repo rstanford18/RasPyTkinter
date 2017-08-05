@@ -157,7 +157,6 @@ class CameraStream():
         self.displayImg    = self.connectingImg
         self.camName       = cameraName
         self.camDict       = camDict
-        self.isValidImg    = False
         self.han_init_ooe()
             
     def han_init_ooe(self):
@@ -168,12 +167,12 @@ class CameraStream():
         self.k.start()
     
     def get_connecting_img(self):
-        img = Image.open("connecting.jpg").convert("L")
+        img = Image.open("images/connecting.jpg").convert("L")
         arr = numpy.array(img)
         self.connectingImg = arr
       
     def get_failed_img(self):
-        img = Image.open("offline.jpg").convert("L")
+        img = Image.open("images/offline.jpg").convert("L")
         arr = numpy.array(img)
         self.failedImg = arr
            
@@ -213,20 +212,13 @@ class CameraStream():
                 pass
             try:
                 shp = frame.shape
-                print('failCount',failCount, self.camName)
-                self.isValidImg = True
-            except:
-                print('failCount',failCount, self.camName)
-                self.isValidImg = False
-                          
-            if self.isValidImg:
                 self.displayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 failedCount = 0
-            else:
+            except:
                 self.displayImg = self.failedImg      
                 failCount += 1
-            
-            if failCount > 10000:
+
+            if failCount > 1000:
                     break   
                 
             if cv2.waitKey(1) == 27:

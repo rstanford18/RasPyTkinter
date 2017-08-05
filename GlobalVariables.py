@@ -118,15 +118,15 @@ counter = 0
 
 password = 'MTIzNDU2'.encode('ascii')
 
-winPhotoPath = "bluePrint.gif"
-macPhotoPath = 'bluePrint.gif'
-personalPCPhoto   = 'bluePrint.gif'
+winPhotoPath = "images/bluePrint.gif"
+macPhotoPath = 'images/bluePrint.gif'
+personalPCPhoto   = 'images/bluePrint.gif'
 
 
-winConfigPath = "config.ini"
-macConfigPath = 'config.ini'
-personalPCIni   = 'config.ini'
-configFile = 'config.ini'
+winConfigPath = "bin/config.ini"
+macConfigPath = 'bin/config.ini'
+personalPCIni   = 'bin/config.ini'
+configFile = 'bin/config.ini'
 
 
 ###################################################

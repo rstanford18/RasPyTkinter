@@ -8,7 +8,7 @@ import UIWidgets as ui
 import UITreeview as uitv
 from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
-
+import numpy
 
 ##############################################################################  
 class CameraView(tk.Frame):
@@ -127,12 +127,12 @@ class CameraElementMeta():
     def han_activate_stream(self):
         self.camThread = CameraStream(self.camName, self.camDict)
     
-    def get_active_frame(self):        
-        return self.camThread.cImgFrame
-      
+    def get_active_frame(self):
+        return self.camThread.displayImg
+    
     def get_init_img(self):
         try:
-            img      = cv2.cvtColor(self.get_active_frame(), cv2.COLOR_BGR2RGB)
+            img      = self.get_active_frame()
             img      = Image.fromarray(img)
             self.img = ImageTk.PhotoImage(img)
         except cv2.error as e:
@@ -152,18 +152,31 @@ class CameraElementMeta():
 ##############################################################################  
 class CameraStream():
       
-    def __init__(self, cameraName, camDict):        
-        self.cImgFrame = None
-        self.camName = cameraName
-        self.camDict = camDict
+    def __init__(self, cameraName, camDict):              
+        self.get_connecting_img()
+        self.displayImg    = self.connectingImg
+        self.camName       = cameraName
+        self.camDict       = camDict
+        self.isValidImg    = False
         self.han_init_ooe()
             
     def han_init_ooe(self):
         self.han_get_cam_params()
         self.han_construct_url()
+        self.get_failed_img()
         self.k = Thread(target=self.han_get_cam_feed)     
         self.k.start()
-        
+    
+    def get_connecting_img(self):
+        img = Image.open("C:\\Users\\RaymondS\\git\\connecting.jpg").convert("L")
+        arr = numpy.array(img)
+        self.connectingImg = arr
+      
+    def get_failed_img(self):
+        img = Image.open("C:\\Users\\RaymondS\\git\\offline.jpg").convert("L")
+        arr = numpy.array(img)
+        self.failedImg = arr
+           
     def han_get_cam_params(self):
   
         for i in self.camDict:
@@ -185,20 +198,37 @@ class CameraStream():
         return cv2.VideoCapture(self.url)
     
     def han_get_cam_feed(self):
-
+        self.img = None
         cap = self.get_stream_data()
         keepAlive = True
+        failCount = 0
         while True:
             if keepAlive == False:
                 cap = self.get_stream_data()
                 keepAlive = True
             try:
-                ret, frame = cap.read()
-                keepAlive = ret
+                ret, frame = cap.read()        
+                keepAlive = ret        
             except cv2.error as e:
                 pass
-
-            self.cImgFrame = frame
+            try:
+                shp = frame.shape
+                print('failCount',failCount, self.camName)
+                self.isValidImg = True
+            except:
+                print('failCount',failCount, self.camName)
+                self.isValidImg = False
+                          
+            if self.isValidImg:
+                self.displayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                failedCount = 0
+            else:
+                self.displayImg = self.failedImg      
+                failCount += 1
+            
+            if failCount > 10000:
+                    break   
+                
             if cv2.waitKey(1) == 27:
                 exit(0)
         print('Camera:',self.camName,'Thread State:','Dead')

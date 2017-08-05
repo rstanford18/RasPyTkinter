@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import BOTH, Frame
 import GlobalVariables as gv
 import CfgEnviroment as envir
 envir.defineEnviroment()
@@ -59,11 +58,11 @@ class SystemInfo():
         return popUpGeometry   
  
 ################################################################################ 
-class NavigationManager(Frame):
+class NavigationManager(tk.Frame):
     
     def __init__(self, parent, launch):
  
-        Frame.__init__(self, parent, bg=gv.bckGround) 
+        tk.Frame.__init__(self, parent, bg=gv.bckGround) 
         self.cFrame = None
         self.parent = parent  
         self.launch = launch
@@ -76,12 +75,12 @@ class NavigationManager(Frame):
         if self.cFrame != None:
             self.nav.pack_forget()
         
-        self.nav = Frame(self.parent, bg=gv.bckGround)
-        self.nav.pack(fill=BOTH, expand=1)           
+        self.nav = tk.Frame(self.parent, bg=gv.bckGround)
+        self.nav.pack(fill=tk.BOTH, expand=1)           
         
         self.frame = nav(self.nav, self)
         self.cFrame = self.frame
-        self.frame.pack(fill=BOTH, expand=1)
+        self.frame.pack(fill=tk.BOTH, expand=1)
         self.frame.tkraise()
                    
     def showOverviewPage(self):

@@ -19,8 +19,7 @@ class OverviewPage(tk.Frame):
         self.ux         = self.nav.ux
         self.ux.han_change_title('Launch Pad')
         self.objDataMgr = self.nav.launch.ObjDataMgr       
-
-        
+      
         self.han_init_sequence()
 
     def han_init_sequence(self):

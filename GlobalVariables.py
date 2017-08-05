@@ -115,17 +115,13 @@ debugApp = False
 currentDt = ""
 counter = 0
 
+imgConnect = "images/connecting.jpg"
+imgOffline = "images/offline.jpg"
 
 password = 'MTIzNDU2'.encode('ascii')
 
-winPhotoPath = "images/bluePrint.gif"
-macPhotoPath = 'images/bluePrint.gif'
-personalPCPhoto   = 'images/bluePrint.gif'
+bluePrintPath = "images/bluePrint.gif"
 
-
-winConfigPath = "bin/config.ini"
-macConfigPath = 'bin/config.ini'
-personalPCIni   = 'bin/config.ini'
 configFile = 'bin/config.ini'
 
 

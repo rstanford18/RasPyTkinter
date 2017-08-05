@@ -139,7 +139,7 @@ class TagCanvas(tk.Frame):
     def __init__(self, parent, w, h):
         self.parent = parent
         canvas      = Canvas(width=w, height=h)
-        self.image  = gf.getImageForWidget()     
+        self.image  = gf.getBluePrintImageForWidget()     
         canvas.pack()
         canvas.create_image(0,0, image=self.image, anchor='nw')
         

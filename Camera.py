@@ -44,40 +44,44 @@ class CameraView(tk.Frame):
     
     def han_init_frame_grid(self):
         for i in range(0, self.camListLen):
-            geoDict = self.han_grid_spacing(self.gridSize,i, self.ux.sw, self.ux.sh)
+            cGeo = self.ux.get_curr_coords('all')
+            geoDict = self.han_grid_spacing(self.gridSize,i, cGeo[2], cGeo[3])
             h = geoDict['h']
             w = geoDict['w']
             x = geoDict['x']
             y = geoDict['y']
-            
             f = tk.Frame(self, height=h, width=w, highlightbackground="#00FF00", 
                             highlightcolor="#00FF00", highlightthickness=1,)
             f.pack_propagate(0) # don't shrink
             f.place(x=x, y=y)
-            self.camList[i].han_start_stream(f)
+            self.camList[i].han_start_stream(f, w, h)
                   
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
         
         if size == 1:
             spacingDict = {}
-            spacingDict[0] = {'x':0,'y':0,'w':w,'h':h}
+            spacingDict[0] = {'x':(w/2)/2,'y':0,'w':h,'h':h}                              
             return spacingDict[0]
         
         c, r = self.gridDict[size]
         
         objW = int(w/c)
         objH = int(h/r)
-        
         item = 0
+        prevX = 0
         for k in range(0,r):
             y = k*objH
             for i in range(0,c):
-                w = objW
-                x = i*objW
-                spacingDict[item] = {'x':x,'y':y,'w':w,'h':objH}
+                if i == 0:
+                    x = int((w-h)/2)
+                    prevX = x
+                else:
+                    x = prevX+objH
+                    prevX = x
+                spacingDict[item] = {'x':x,'y':y,'w':objH,'h':objH}
                 item += 1
- 
+         
         return spacingDict[itemCount]
 
 ##############################################################################         
@@ -112,15 +116,18 @@ class CameraElementMeta():
         self.camName = camName
         self.camDict = camDict
         self.han_activate_stream()
-        self.img = None
-        
-        self.frame = None
+        self.img     = None
+        self.w       = None
+        self.h       = None
+        self.frame   = None
     
     def han_init_ooe(self):
         self.get_init_img()
           
-    def han_start_stream(self, frame):
+    def han_start_stream(self, frame, w, h):
         self.frame = frame
+        self.w     = w
+        self.h     = h
         self.han_init_cam_panel() 
         self.han_panel_stream()      
            
@@ -134,14 +141,26 @@ class CameraElementMeta():
         try:
             img      = self.get_active_frame()
             img      = Image.fromarray(img)
-            self.img = ImageTk.PhotoImage(img)
+            if self.w != None:
+                basewidth = self.w
+                wpercent = (basewidth/float(img.size[0]))
+                hsize = int((float(img.size[1])*float(wpercent)))
+                img = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                self.img = ImageTk.PhotoImage(img)
+            else:    
+                self.img = ImageTk.PhotoImage(img)
         except cv2.error as e:
-            print('')
+            pass
     
     def han_init_cam_panel(self):         
         self.panel = tk.Label(self.frame, image=self.img, bg=gv.bckGround)
         self.panel.pack(side="bottom", fill="both", expand="yes")
-        
+        self.panel.bind('<Any-Enter>', self.on_mouse_enter)
+    
+    def on_mouse_enter(self, event):
+        print(self.camName)
+    
+    
     def han_panel_stream(self):
         self.get_init_img()
         self.panel.configure(image=self.img)
@@ -167,12 +186,12 @@ class CameraStream():
         self.k.start()
     
     def get_connecting_img(self):
-        img = Image.open("images/connecting.jpg").convert("L")
+        img = Image.open(gv.imgConnect).convert("L")
         arr = numpy.array(img)
         self.connectingImg = arr
       
     def get_failed_img(self):
-        img = Image.open("images/offline.jpg").convert("L")
+        img = Image.open(gv.imgOffline).convert("L")
         arr = numpy.array(img)
         self.failedImg = arr
            
@@ -197,7 +216,6 @@ class CameraStream():
         return cv2.VideoCapture(self.url)
     
     def han_get_cam_feed(self):
-        self.img = None
         cap = self.get_stream_data()
         keepAlive = True
         failCount = 0
@@ -211,7 +229,9 @@ class CameraStream():
             except cv2.error as e:
                 pass
             try:
-                shp = frame.shape
+                '''test the frame element if it has no shape property
+                its invalid and the exception handles the dislplay.'''
+                shp = frame.shape 
                 self.displayImg = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 failedCount = 0
             except:

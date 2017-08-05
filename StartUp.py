@@ -36,22 +36,43 @@ class SystemInfo():
     def getVerticalCenter(self,px):   
         return int((self.sh/2)-(px/2))
    
-    def getPopUpLocation(self, w, h):
+    def get_curr_coords(self, coord=None):
         self.root.update_idletasks()
-        popUpWidth  = w
-        popUpHeight = h
         rootGeometry = self.root.geometry()
-    
         xy = rootGeometry.split('+',1)[1].split('+')
         wh = rootGeometry.split('+',1)[0].split('x')
        
-        pW = int(wh[0])
-        pH = int(wh[1])
-        pX = int(xy[0])
-        pY = int(xy[1])
+        self.x = int(xy[0])
+        self.y = int(xy[1])   
+        self.w = int(wh[0])
+        self.h = int(wh[1])
+
+        if coord == 'x':
+            return self.x
         
-        x = int(pX+(pW/2)-(popUpWidth/2))
-        y = int(pY+(pH/2)-(popUpHeight/2))
+        if coord == 'y':
+            return self.y
+        
+        if coord == 'h':
+            return self.w
+        
+        if coord == 'w':
+            return self.h
+        
+        if coord == 'all':
+            return (self.x, self.y, 
+                    self.w, self.h)
+        
+        return
+        
+    def getPopUpLocation(self, w, h):
+        
+        self.get_curr_coords()
+        popUpWidth  = w
+        popUpHeight = h
+        
+        x = int(self.x+(self.w/2)-(popUpWidth/2))
+        y = int(self.y+(self.h/2)-(popUpHeight/2))
     
         popUpGeometry = "%sx%s+%s+%s" % (popUpWidth,popUpHeight,x,y)
 

@@ -4,7 +4,7 @@ from sys import platform
 import base64
 import socket
 
-def getPathforImage():
+def getBluePrintPathforImage():
     
     if socket.gethostname() == 'DESKTOP-AB68VHC':
         return gv.personalPCPhoto
@@ -53,9 +53,9 @@ def handleGetAvailableTagName(CanvasTags):
             return i
 
 ###################################################
-def getImageForWidget():
+def getBluePrintImageForWidge():
     from tkinter import PhotoImage
-    photo  = PhotoImage(file=getPathforImage())
+    photo  = PhotoImage(file=gv.bluePrintPath)
     return photo
 
 ###################################################

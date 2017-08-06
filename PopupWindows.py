@@ -131,6 +131,7 @@ class SizePopupWindow(tk.Toplevel):
     def closeWindow(self, event):
         self.destroy()  
 
+##############################################################################
 class GPIOBind(tk.Toplevel):
     
     def __init__(self, parent):

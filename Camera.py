@@ -104,7 +104,7 @@ class CameraFactory():
         self.activeCams =  self.get_active_cameras()
         
         for i in self.activeCams:
-            if self.activeCams[i].get('enabled', False):
+            if self.activeCams[i].get('Enabled', False):
                 cam = CameraElementMeta(self, i, self.activeCams[i])
                 self.camList.append(cam)
       
@@ -198,7 +198,7 @@ class CameraStream():
     def han_get_cam_params(self):
   
         for i in self.camDict:
-            setattr(self, i, self.camDict[i])
+            setattr(self, str(i).lower(), self.camDict[i])
     
     def han_construct_url(self):
         self.port = ':'+self.port if self.port != '' else ''

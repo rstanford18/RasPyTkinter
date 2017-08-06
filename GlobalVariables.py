@@ -32,36 +32,42 @@ CountDownState = None
 
 PasswordFMT = 'rtsp://','admin:steritec@','192.168.6.103/Streaming/Channels/1'
 
+
+CameraOrderStruct = ['Camera Name','Url','Port','Path','User','Password','Enabled']
 ActiveCameras = {
                 'BankOfAmerica':{
-                                'url':'http://72.48.229.3',
-                               'port':'8887',
-                               'path':'/mjpg/video.mjpg',                           
-                               'user':'',
-                               'password':'',
-                               'enabled':True},
+                        'Camera Name':'BankOfAmerica',
+                                'Url':'http://72.48.229.3',
+                               'Port':'8887',
+                               'Path':'/mjpg/video.mjpg',                           
+                               'User':'',
+                           'Password':'',
+                            'Enabled':True},
              'SteritecSecurity':{
-                                'url':'rtsp://192.168.6.103',
-                               'port':'',
-                               'path':'/Streaming/Channels/1',
-                               'user':'admin',
-                               'password':'steritec',
-                             'enabled':False},
+                        'Camera Name':'SteritecSecurity',
+                                'Url':'rtsp://192.168.6.103',
+                               'Port':'',
+                               'Path':'/Streaming/Channels/1',
+                               'User':'admin',
+                           'Password':'steritec',
+                            'Enabled':False},
             'Doggy Day Care':{
-                                'url':'http://tails-waipio.viewnetcam.com',
-                               'port':'50002',
-                               'path':'/nphMotionJpeg?Resolution=640x480&Quality=Clarity',
-                               'user':'',
-                               'password':'',
-                             'enabled':True},
+                        'Camera Name':'Doggy Day Care',
+                                'Url':'http://tails-waipio.viewnetcam.com',
+                               'Port':'50002',
+                               'Path':'/nphMotionJpeg?Resolution=640x480&Quality=Clarity',
+                               'User':'',
+                           'Password':'',
+                            'Enabled':True},
 
             'FlaKK Rorvic Ferry':{
-                                'url':'http://193.213.13.69',
-                               'port':'',
-                               'path':'/mjpg/video.mjpg',
-                               'user':'',
-                               'password':'',
-                             'enabled':True},
+                        'Camera Name':'FlaKK Rorvic Ferry',
+                                'Url':'http://193.213.13.69',
+                               'Port':'',
+                               'Path':'/mjpg/video.mjpg',
+                               'User':'',
+                           'Password':'',
+                            'Enabled':True},
                  
                                }
 

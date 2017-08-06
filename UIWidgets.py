@@ -1,4 +1,4 @@
-from tkinter import Frame,Label,BOTH,Text
+from tkinter import Frame,Label,BOTH,Text, Entry
 import GlobalVariables as gv
 import GlobalFunctions as gf
 
@@ -195,8 +195,8 @@ def make_TextEntry(master, x, y, w, h, *args, **kwargs):
     f = Frame(master, height=h, width=w)
     f.pack_propagate(0) # don't shrink
     f.place(x=x, y=y)
-    tb = Text(f, *args, **kwargs)
-    tb.bind('<Tab>',master.master.master.OnTextTab)
+    tb = Entry(f, *args, **kwargs)
+    tb.bind('<Tab>',master.master.OnTextTab)
     tb.pack(fill=BOTH, expand=1)
     return tb
 

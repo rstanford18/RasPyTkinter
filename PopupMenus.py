@@ -35,3 +35,28 @@ class WidgetPopup(Menu):
         self.addMenuItems()
         self.event = event
         self.tk_popup(event.x_root, event.y_root)
+        
+##############################################################################
+class AdminCameraCfgPopup(Menu):
+    def __init__(self, parent):
+        Menu.__init__(self, None,  tearoff=0)        
+        self.parent  = parent
+
+    def menu_one(self):
+        self.parent.han_popup_action_route('edit')
+
+    def menu_two(self):
+        self.parent.han_popup_action_route('delete')
+        
+    def addMenuItems(self):
+        self.add_command(label='Edit', command=self.menu_one)
+        self.add_command(label="Delete", command=self.menu_two)
+
+    def popup(self, event):
+               
+        self.addMenuItems()
+        self.event = event
+        self.tk_popup(event.x_root, event.y_root)
+        
+        
+        

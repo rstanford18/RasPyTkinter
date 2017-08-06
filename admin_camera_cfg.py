@@ -4,7 +4,8 @@ import GlobalVariables as gv
 import GlobalFunctions as gf
 import UIWidgets as ui
 
-
+from ClockThread import Clock as ck
+from MenuBar import MainMenuBar as mb
 
 
 class AdminCameraCfg(tk.Frame):
@@ -12,33 +13,47 @@ class AdminCameraCfg(tk.Frame):
     def __init__(self, parent, nav):
 
         tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        self.parent      = parent
         self.nav         = nav
         self.ux          = self.nav.ux
         self.ux.han_change_title('Admin - Camera Config')
+        self.mb          = mb(self)
         self.menu        = nav.parent.config(menu=self.mb.getMenu()) 
         self.pVar        = StringVar()
         self.cbVar       = IntVar()        
         self.entrySettings   = gv.entrySettings
 
-
-        self.w  = w
-        self.ux = parent.ux
-        self.canvas = parent.canvas
-        self.frame = tk.Frame(self.parent, height=h, width=w, 
+        self.frame = tk.Frame(self, height=500, width=1100, 
                               highlightbackground='white', highlightcolor='white', highlightthickness=1,)
         self.frame.pack_propagate(0) # don't shrink
-        self.frame.place(x=x, y=y)
+        self.frame.place(x=self.ux.getHorizontalCenter(1100), y=400)
         self.initTreeView()
         self.prevSelection = None
-        style = ttk.Style()
-        style.theme_use('clam')
-        style.configure('Treeview', background='black', 
-                fieldbackground='black', foreground='white')
+#         style = ttk.Style()
+#         style.theme_use('clam')
+#         style.configure('Treeview', background='black', 
+#                 fieldbackground='black', foreground='white')
     
     def initTreeView(self):
-        self.tree = ttk.Treeview(self.frame, columns=('Tag Name'))
-        self.tree.heading('#0', text='Tag Name')
-        self.tree.column('#0', minwidth=80, width=self.w-5, stretch=False)
+        self.tree = ttk.Treeview(self.frame, columns=('Camera Name','URL','Port','Path','User',"Password",'Enabled'))
+        self.tree.heading('#0', text='Camera Name')
+        self.tree.column('#0', minwidth=80, width=150, stretch=True)
+        self.tree.heading('#1', text='Url')
+        self.tree.column('#1', minwidth=80, width=275, stretch=True)
+        self.tree.heading('#2', text='Port')
+        self.tree.column('#2', minwidth=80, width=30, stretch=True)
+        
+        self.tree.heading('#3', text='Path')
+        self.tree.column('#3', minwidth=80, width=350, stretch=True)
+        self.tree.heading('#4', text='User')
+        self.tree.column('#4', minwidth=80, width=50, stretch=True)
+        self.tree.heading('#5', text='Password')
+        self.tree.column('#5', minwidth=80, width=50, stretch=True)
+        self.tree.heading('#6', text='Enabled')
+        self.tree.column('#6', minwidth=50, width=100, stretch=True)        
+        
+        
+        
         self.tree.bind('<Any-Enter>', self.highLightSelection)
         self.tree.bind('<Button-1>', self.highLightSelection)
         self.tree.bind('<Button-2>', self.highLightSelection)
@@ -49,7 +64,29 @@ class AdminCameraCfg(tk.Frame):
         self.tree.pack(fill=tk.BOTH, expand=1)
         self.treeview = self.tree
         self.treeViewObj = self.treeview
+
+        self.han_load_active_camera_db()
+    
+    def han_item_add(self):
         
+        self.treeview.insert('', 'end', text='BankOfAmerica', 
+                             value=('http://72.48.229.3','8887','/mjpg/video.mjpg','testuser','testpass','True'))
+    
+    
+    def han_load_active_camera_db(self):
+        
+        self.activeCameras = gv.ActiveCameras
+        
+        for i in self.activeCameras:
+            camName = i
+            camDict = self.activeCameras[i]
+            print(camDict)
+            
+            self.treeview.insert('', 'end', text=camName, 
+                 value=(camDict.get('url'),camDict.get('port',''),camDict.get('path')
+                        ,camDict.get('user', ''),camDict.get('passsword', ''),str(camDict.get('enabled'))))
+
+    
     def popup(self, event):
         try:
             tagName = self.getCurrentTagName(event)

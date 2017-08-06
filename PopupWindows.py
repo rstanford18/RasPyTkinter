@@ -10,7 +10,7 @@ class SizePopupWindow(tk.Toplevel):
     def __init__(self, parent):
 
         tk.Toplevel.__init__(self)
-        
+        ##
 
         self.callPar   = parent.parent
         self.ux        = parent.parent.ux

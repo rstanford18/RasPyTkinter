@@ -182,7 +182,7 @@ class AdminCameraCfg(tk.Frame):
 
         self.tkvar.set(1) 
         #self.parent.iconbitmap(default="gear16.ico")
-        
+        ##
         f1 = Frame(self.group1, height=20, width=60, background=gv.bckGround)
         f1.pack_propagate(0)
         f1.place(x=330, y=50)

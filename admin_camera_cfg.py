@@ -133,7 +133,8 @@ class AdminCameraCfg(tk.Frame):
         self.dropDown0.pack(fill=BOTH, expand=1)       
 
     def han_init_btn_widgets(self):   
-        self.B1 = ui.make_OpenCloseBtn(self, 1525, 260, 75, 25, self.han_add_update_route, text='Add', 
+        self.B1 = ui.make_OpenCloseBtn(self, 1525, 260, 75, 25, 
+                                       self.han_add_update_route, text='Add', 
                       bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)
         
         self.B2 = ui.make_OpenCloseBtn(self, 1525, 300, 75, 25, 
@@ -148,7 +149,7 @@ class AdminCameraCfg(tk.Frame):
                                        self.han_delete_camera_in_db, text='Delete', 
                       bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)       
         
-        self.B5 = ui.make_OpenCloseBtn(self, 1525, 750, 75, 25, 
+        self.B5 = ui.make_OpenCloseBtn(self, 1525, 725, 75, 25, 
                                        self.han_save_changes_to_db, text='Save', 
                       bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)
         

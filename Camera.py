@@ -9,6 +9,8 @@ import UITreeview as uitv
 from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
 import numpy
+from Camera_Popup import CameraPopUpView as cpv
+from copy import deepcopy
 
 ##############################################################################  
 class CameraView(tk.Frame):
@@ -44,18 +46,22 @@ class CameraView(tk.Frame):
     
     def han_init_frame_grid(self):
         for i in range(0, self.camListLen):
-            cGeo = self.ux.get_curr_coords('all')
-            geoDict = self.han_grid_spacing(self.gridSize,i, cGeo[2], cGeo[3])
-            h = geoDict['h']
-            w = geoDict['w']
-            x = geoDict['x']
-            y = geoDict['y']
-            f = tk.Frame(self, height=h, width=w, highlightbackground="#00FF00", 
-                            highlightcolor="#00FF00", highlightthickness=1,)
-            f.pack_propagate(0) # don't shrink
-            f.place(x=x, y=y)
-            self.camList[i].han_start_stream(f, w, h)
-                  
+            self.han_create_frames(i)
+    
+    def han_create_frames(self, item):
+        cGeo = self.ux.get_curr_coords('all')
+        geoDict = self.han_grid_spacing(self.gridSize, item, cGeo[2], cGeo[3])
+        h = geoDict['h']
+        w = geoDict['w']
+        x = geoDict['x']
+        y = geoDict['y']
+        f = tk.Frame(self, height=h, width=w, highlightbackground="#686868", 
+                        highlightcolor="#686868", highlightthickness=1,)
+        f.pack_propagate(0) # don't shrink
+        f.place(x=x, y=y)
+        self.camList[item].han_set_item_value(item)
+        self.camList[item].han_start_stream(f, w, h)
+                      
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
         oriH = h
@@ -99,6 +105,7 @@ class CameraFactory():
     def __init__(self, parent):
         
         self.parent  = parent
+        self.ux      = parent.ux
         self.camList = []
         self.han_init_ooe()
         
@@ -126,6 +133,7 @@ class CameraElementMeta():
         self.parent = parent
         self.camName = camName
         self.camDict = camDict
+        self.ux      = parent.ux
         self.han_activate_stream()
         self.img     = None
         self.w       = None
@@ -166,14 +174,17 @@ class CameraElementMeta():
     def han_init_cam_panel(self):         
         self.panel = tk.Label(self.frame, image=self.img, bg=gv.bckGround)
         self.panel.pack(side="bottom", fill="both", expand="yes")
-        self.panel.bind('<Any-Enter>', self.on_mouse_enter)
+        self.panel.bind('<ButtonPress-1>', self.on_mouse_enter)
     
     def on_mouse_enter(self, event):
-        print(self.camName)
-    
+        
+        cpv(self)
+    def han_set_item_value(self, item):
+        self.item = item
     
     def han_panel_stream(self):
         self.get_init_img()
+        #print(self.camName, 'Panel Stream Alive')
         self.panel.configure(image=self.img)
         self.panel.image = self.img
         self.panel._backbuffer_ = self.img
@@ -248,7 +259,8 @@ class CameraStream():
             except:
                 self.displayImg = self.failedImg      
                 failCount += 1
-
+#             if self.camName == 'BankOfAmerica':
+#                 print('Camera:',self.camName,'Thread State:','Alive', id(self.parent))
             if failCount > 1000:
                     break   
                 

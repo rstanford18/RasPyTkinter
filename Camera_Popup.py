@@ -65,7 +65,7 @@ class CameraPopUpView(tk.Toplevel):
 #                             highlightcolor="#00FF00", highlightthickness=1,)
 #             f.pack_propagate(0) # don't shrink
 #             f.place(x=0, y=0)
-            self.camList[i].han_start_stream(self, w, h)
+            self.camList[i].han_init_on_popup(self, w, h)
                   
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}

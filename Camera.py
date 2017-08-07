@@ -142,6 +142,14 @@ class CameraElementMeta():
     
     def han_init_ooe(self):
         self.get_init_img()
+    
+    def han_init_on_popup(self, frame, w, h):
+        self.frame = frame
+        self.w     = w
+        self.h     = h
+        self.han_init_cam_panel() 
+        self.panel.unbind('<ButtonRelease-1>')
+        
           
     def han_start_stream(self, frame, w, h):
         self.frame = frame
@@ -176,10 +184,6 @@ class CameraElementMeta():
         self.panel.pack(side="bottom", fill="both", expand="yes")
         self.panel.bind('<ButtonRelease-1>', self.han_open_popup)
 
-        
-#     def on_mouse_enter(self, event):
-# #         self.panel.unbind('<Any-Enter>')      
-#         self.panel.bind('<ButtonRelease-1>', self.han_open_popup)
         
     def han_open_popup(self, event=None):
 #         self.panel.unbind('<ButtonRelease-1>',)

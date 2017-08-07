@@ -387,7 +387,7 @@ class CameraStream():
                 break
                 
 
-            
+            cv2.waitKey(25)
                
             if cv2.waitKey(1) == 27:
                 exit(0)

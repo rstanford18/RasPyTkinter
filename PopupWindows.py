@@ -17,7 +17,7 @@ class SizePopupWindow(tk.Toplevel):
 
         w = 200
         h = 180  
-        geometry = self.ux.getPopUpLocation(w,h)
+        geometry = self.ux.get_popup_location(w,h)
 
         self.geometry(geometry)
         self.pVar = StringVar()
@@ -144,7 +144,7 @@ class GPIOBind(tk.Toplevel):
         
         w = 450
         h = 120 
-        geometry = self.ux.getPopUpLocation(w,h)
+        geometry = self.ux.get_popup_location(w,h)
         self.geometry(geometry)
         self.pVar = StringVar()
         self.cbVar = IntVar()

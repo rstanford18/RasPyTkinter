@@ -41,7 +41,7 @@ class ClimateMain(ttk.Frame):
 
         
     def han_init_chart_ux(self):
-        ctr = self.ux.getHorizontalCenter(1500)
+        ctr = self.ux.get_horizontal_center(1500)
         self.plotFrame = tk.Frame(self, height=500, width=1500, highlightbackground="white", highlightcolor='white', highlightthickness=1)
         self.plotFrame.pack_propagate(0) # don't shrink
         self.plotFrame.place(x=ctr, y=150)
@@ -65,7 +65,7 @@ class ClimateMain(ttk.Frame):
         
         
         w = 240
-        ctr = self.ux.getHorizontalCenter(w)
+        ctr = self.ux.get_horizontal_center(w)
         l,m,r = (ctr-(w), ctr, ctr+(w))
         
         self.sh = 300

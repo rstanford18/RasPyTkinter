@@ -23,7 +23,7 @@ class LaunchMain(ttk.Frame):
     def constructLaunchPad(self):
         
         w = 240
-        ctr = self.ux.getHorizontalCenter(w)
+        ctr = self.ux.get_horizontal_center(w)
         l,m,r = (ctr-(w), ctr, ctr+(w))
         
         self.sh = 300

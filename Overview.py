@@ -36,7 +36,7 @@ class OverviewPage(tk.Frame):
         self.Clock = ck(self)
      
     def han_init_banner(self):
-        x = self.ux.getHorizontalCenter(500)
+        x = self.ux.get_horizontal_center(500)
         
         ui.make_label(self, x, 50, 500, 60, text='Sensor Overview', 
                       bg=gv.bckGround, fg=gv.forGround, font=gv.SUPER_FONT)
@@ -91,8 +91,8 @@ class OverviewPage(tk.Frame):
         self.TreeView.highLightSelection(None, tagName)
     
     def han_init_canvas(self):
-        x = self.ux.getHorizontalCenter(self.w)
-        y = self.ux.getVerticalCenter(self.h) 
+        x = self.ux.get_horizontal_center(self.w)
+        y = self.ux.get_vertical_center(self.h) 
         self.canvas = self.TagCvs.canvas
         self.canvas.place(x=x, y=y)
             

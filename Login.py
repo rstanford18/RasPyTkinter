@@ -23,7 +23,7 @@ class LoginPage(ttk.Frame):
     def constructNumberPad(self):
         
         self.ux = self.nav.launch.ux
-        ctr = self.ux.getHorizontalCenter(75)
+        ctr = self.ux.get_horizontal_center(75)
         l,m,r = (ctr-80, ctr, ctr+80)
         
         self.sh = 350
@@ -33,7 +33,7 @@ class LoginPage(ttk.Frame):
         self.keyPadtxt  = StringVar()
         self.keyPadHide = StringVar()
         
-        self.keyEntry = ui.make_keyPadEntry(self, self.ux.getHorizontalCenter(235), 
+        self.keyEntry = ui.make_keyPadEntry(self, self.ux.get_horizontal_center(235), 
                                             self.sh-80, 235, 45, 
                                             textvariabl=self.keyPadHide, 
                                             font=gv.LARGE_FONT, bg='white',fg='black')
@@ -61,7 +61,7 @@ class LoginPage(ttk.Frame):
     def constructKeyPadErrorField(self):
         
         self.keyPadErrorField = StringVar()
-        self.keyPadError = ui.make_keyPadEntry(self, self.ux.getHorizontalCenter(235), 
+        self.keyPadError = ui.make_keyPadEntry(self, self.ux.get_horizontal_center(235), 
                                                320, 235, 20, 
                                             textvariabl=self.keyPadErrorField, 
                                             font=gv.LARGE_FONT, bg=gv.bckGround,fg='red')
@@ -76,7 +76,7 @@ class LoginPage(ttk.Frame):
         
     def LoadBtn(self):
         
-        self.B1       = self.make_ArmDisArm(self.ux.getHorizontalCenter(235), 715, 235, 45, 
+        self.B1       = self.make_ArmDisArm(self.ux.get_horizontal_center(235), 715, 235, 45, 
                                 self.handleAlarmStateChange, text=self.AlarmBtnLbl.get(), 
                                 fg=self.bg, bg=gv.bckGround, 
                                 font=gv.LARGE_FONT)
@@ -95,7 +95,7 @@ class LoginPage(ttk.Frame):
         if isValid:
             if gv.AlarmArmed:
                 gv.AlarmArmed = False
-                self.nav.showLaunchPad()
+                self.nav.show_launch_pad()
             else:
                 self.keyPadHide.set('')
                 self.keyPadtxt.set('')
@@ -146,7 +146,7 @@ class LoginPage(ttk.Frame):
         event.widget.config(bg=gv.bckGround, fg=self.bg)    
         
     def callCDC(self):
-        self.cdc = cdc(self,self.ux.getHorizontalCenter(235),780)
+        self.cdc = cdc(self,self.ux.get_horizontal_center(235),780)
         
     def destroyCDC(self):
         self.cdc.destroyClock()

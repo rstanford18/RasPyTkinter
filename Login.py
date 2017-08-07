@@ -9,13 +9,13 @@ class LoginPage(ttk.Frame):
     
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
+        nav.ux.han_change_title('Login')
         self.nav = nav
         self.parent = parent  
         #strup.changeTitle('Main Panel')
 #         titleLabel = Label(self,text="DisArm",font=gv.LARGE_FONT,
 #                         bg=gv.bckGround,fg=gv.forGround)
 #         titleLabel.place(x=350, y=10)
-   
         self.constructNumberPad()
         self.constructKeyPadErrorField()
         self.Clock = ck(self)

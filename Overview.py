@@ -10,19 +10,19 @@ from MenuBar import MainMenuBar as mb
 class OverviewPage(tk.Frame):
     
     def __init__(self, parent, nav):
-        tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-
+        tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        self.title      = 'Security System'
         self.parent     = parent       
-        self.nav       = nav
+        self.nav        = nav
         self.mb         = mb(self)
         self.menu       = nav.parent.config(menu=self.mb.getMenu()) 
         self.ux         = self.nav.ux
-        self.ux.han_change_title('Security System')
         self.objDataMgr = self.nav.launch.ObjDataMgr       
       
         self.han_init_sequence()
 
     def han_init_sequence(self):
+        self.han_init_title()
         self.han_init_banner()
         self.han_init_buttons()
         self.han_init_tagpallet()
@@ -32,6 +32,9 @@ class OverviewPage(tk.Frame):
         self.han_init_data_mgr_link()
         self.han_init_thread_link()
         
+    def han_init_title(self):
+        self.ux.han_change_title(self.title)
+
     def han_init_clock(self):   
         self.Clock = ck(self)
      

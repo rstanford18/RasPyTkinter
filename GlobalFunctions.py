@@ -1,6 +1,6 @@
-import random
-import GlobalVariables as gv
 from sys import platform
+import GlobalVariables as gv
+import random
 import base64
 import socket
 import pprint
@@ -36,20 +36,27 @@ def getAvailablePiIPList():
 ###################################################
 
 def handleGetAvailableTagName(CanvasTags):
-    masterList  =  set(CanvasTags+[i for i in gv.tagElements])
-    l = []
-    for i in masterList:
-        l.append((int(i.split('-')[1].strip())))
+    tagNameList = set(CanvasTags + [*gv.tagElements])
 
-    l = sorted(l)
-    if len(l) < 1:
-        lenL = 24
+    tagNums = []
+    for tagName in tagNameList:
+        tagNums.append( getTagNum(tagName) )
+
+    tagNumsCount = len(tagNums)
+    
+    if tagNumsCount < 1:
+        tagNumsCount = 24
     else:
-        lenL = max(l)*4
+        tagNumsCount = max(tagNums) * 4
 
-    for i in range(1,lenL):
-        if i not in l:
-            return i
+    for tagNum in range(1, tagNumsCount):
+        if tagNum not in tagNums:
+            return tagNum
+
+###################################################
+
+def getTagNum(tagName):
+    return int(tagName.split('-')[1].strip())
 
 ###################################################
 
@@ -61,7 +68,6 @@ def getBluePrintImageForWidget():
 
 def getGeometryFromCoor(coords, var=None):
     x1, y1, x2, y2 = list(map(int, coords))
-
     w = x2 - x1
     h = y2 - y1
 
@@ -75,9 +81,9 @@ def getGeometryFromCoor(coords, var=None):
         'width'     : w,
         'height'    : h
     }
-    
+
     return coordDict.get(var, coordDict)
-   
+
 ###################################################
 
 def decryptPassword(pWord):
@@ -113,6 +119,15 @@ def getAvailableGPIO():
 
     return activeTags
 
+
+def updateTextVar(parent, value=None):
+    parent.set(parent.get() + f'{value}')
+
+###################################################
+
+def undoTextVar(parent):
+    parent.set(parent.get()[:-1])
+
 ###################################################
 # Not Currently Implemented
 ###################################################
@@ -128,32 +143,6 @@ def getAvailableGPIO():
 #             value = widg[key]
 #             vtype = type(value)
 #             print('Type: {:<30} Value: {}'.format(str(vtype), value))
-
-###################################################
-
-def updateTextVar(parent, value=None):
-    currentValues = parent.get()
-
-    if value == None:
-        pString = ''
-    elif currentValues == "":
-        pString = str(value)
-    else:
-        pString = currentValues + str(value)
-
-    parent.set(pString)
-
-###################################################
-
-def undoTextVar(parent):
-    currentValues = parent.get()
-
-    if currentValues == "":
-        pass
-    else:
-        pString = currentValues[:-1]
-        parent.set(pString)
-
 
 ###################################################
 # TO BE DELETED - 08/7/2017

@@ -14,9 +14,10 @@ import numpy
 class CameraPopUpView(tk.Toplevel):
     def __init__(self, parent):
         tk.Toplevel.__init__(self, bg=gv.bckGround)   
-###
+       
         self.protocol("WM_DELETE_WINDOW", self.han_destroy_call_back)
-        self.parent      = parent       
+        self.parent      = parent
+        self.parent.panel.unbind('<ButtonRelease-1>')      
         self.ux          = parent.ux
         self.ux.han_change_title('CameraView')
         self.gridSizeCfg = [1,4,8,16]
@@ -58,13 +59,13 @@ class CameraPopUpView(tk.Toplevel):
             geoDict = self.han_grid_spacing(self.gridSize,i, cGeo[2], cGeo[3])
             h = geoDict['h']
             w = geoDict['w']
-            x = geoDict['x']
-            y = geoDict['y']
-            f = tk.Frame(self, height=self.h, width=self.w, highlightbackground="#00FF00", 
-                            highlightcolor="#00FF00", highlightthickness=1,)
-            f.pack_propagate(0) # don't shrink
-            f.place(x=0, y=0)
-            self.camList[i].han_start_stream(f, w, h)
+#             x = geoDict['x']
+#             y = geoDict['y']
+#             f = tk.Frame(self, height=self.h, width=self.w, highlightbackground="#00FF00", 
+#                             highlightcolor="#00FF00", highlightthickness=1,)
+#             f.pack_propagate(0) # don't shrink
+#             f.place(x=0, y=0)
+            self.camList[i].han_start_stream(self, w, h)
                   
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}

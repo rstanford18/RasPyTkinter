@@ -174,11 +174,17 @@ class CameraElementMeta():
     def han_init_cam_panel(self):         
         self.panel = tk.Label(self.frame, image=self.img, bg=gv.bckGround)
         self.panel.pack(side="bottom", fill="both", expand="yes")
-        self.panel.bind('<ButtonPress-1>', self.on_mouse_enter)
-    
-    def on_mouse_enter(self, event):
+        self.panel.bind('<ButtonRelease-1>', self.han_open_popup)
+
         
+#     def on_mouse_enter(self, event):
+# #         self.panel.unbind('<Any-Enter>')      
+#         self.panel.bind('<ButtonRelease-1>', self.han_open_popup)
+        
+    def han_open_popup(self, event=None):
+#         self.panel.unbind('<ButtonRelease-1>',)
         cpv(self)
+       
     def han_set_item_value(self, item):
         self.item = item
     

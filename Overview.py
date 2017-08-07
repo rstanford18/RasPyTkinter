@@ -11,8 +11,9 @@ class OverviewPage(tk.Frame):
     
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-        gv.topLevel      = id(self)
-        self.parentID    = id(self)  
+        gv.topLevel     = id(self)
+        self.parentID   = id(self)  
+        self.title      = 'Security System'
         self.parent     = parent       
         self.nav        = nav
         self.mb         = mb(self)

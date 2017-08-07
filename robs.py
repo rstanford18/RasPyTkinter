@@ -1,43 +1,43 @@
-from tkinter import *
-from tkinter import ttk
-import time
-# TOP RIGHT BOTTOM LEFT 
-# FILL DIRECTION - X Y BOTH NONE
+# from tkinter import *
+# from tkinter import ttk
+# import time
+# # TOP RIGHT BOTTOM LEFT 
+# # FILL DIRECTION - X Y BOTH NONE
 
 
-root = Tk()
-class Clock():
-    def __init__(self, parent):
-        self.parent = parent
-        self.ClockFg = "#6E6E6E"
-        self.handleClock()
-        self.updateClock()
+# root = Tk()
+# class Clock():
+#     def __init__(self, parent):
+#         self.parent = parent
+#         self.ClockFg = "#6E6E6E"
+#         self.handleClock()
+#         self.updateClock()
         
-    def handleClock(self):
+#     def handleClock(self):
             
-        self.Clock = self.buildClockUI(1600, 50, 200, 75, font=('times', 30, 'bold'), 
-                                                    bg=gv.bckGround, fg=self.ClockFg)
+#         self.Clock = self.buildClockUI(1600, 50, 200, 75, font=('times', 30, 'bold'), 
+#                                                     bg=gv.bckGround, fg=self.ClockFg)
                
-    def buildClockUI(self, x, y, w, h, *args, **kwargs):
-        f = Frame(self.parent, height=h, width=w, highlightbackground=self.ClockFg, 
-                                highlightcolor=self.ClockFg, highlightthickness=2,)
-        f.pack_propagate(0) # don't shrink
-        f.place(x=x, y=y)
-        lbl = Label(f, *args, **kwargs)
-        lbl.pack(fill=BOTH, expand=1)
-        return lbl 
+#     def buildClockUI(self, x, y, w, h, *args, **kwargs):
+#         f = Frame(self.parent, height=h, width=w, highlightbackground=self.ClockFg, 
+#                                 highlightcolor=self.ClockFg, highlightthickness=2,)
+#         f.pack_propagate(0) # don't shrink
+#         f.place(x=x, y=y)
+#         lbl = Label(f, *args, **kwargs)
+#         lbl.pack(fill=BOTH, expand=1)
+#         return lbl 
 
-    def updateClock(self, previousTime=''):
-        currentTime = time.strftime('%H:%M:%S')
-        if previousTime != currentTime:
-            previousTime = currentTime
-            self.Clock.config(text=currentTime)
+#     def updateClock(self, previousTime=''):
+#         currentTime = time.strftime('%H:%M:%S')
+#         if previousTime != currentTime:
+#             previousTime = currentTime
+#             self.Clock.config(text=currentTime)
         
-        self.Clock.after(200, self.updateClock, previousTime)
+#         self.Clock.after(200, self.updateClock, previousTime)
         
-clock = Clock(root)
+# clock = Clock(root)
 
-root.mainloop()
+# root.mainloop()
 # ---------- TKINTER EVENTS  ----------
  
 # def get_sum(event):
@@ -108,6 +108,8 @@ root.mainloop()
 
 # from tkinter import Tk, BOTH
 # from tkinter.ttk import Frame
+# import asyncio
+# import time
 
 # class Example(Frame):
 #     def __init__(self):
@@ -118,12 +120,26 @@ root.mainloop()
 #         self.master.title("Simple")
 #         self.pack(fill=BOTH, expand=1)
 
-
 # def main():
 #     root = Tk()
 #     root.geometry("250x150+300+300")
 #     app = Example()
+#     startAsync()
 #     root.mainloop()
 
+# def startAsync():
+#     event_loop = asyncio.get_event_loop()
+#     try:
+#         print(event_loop.__dict__)
+#         event_loop.run(slow_function())
+
+#     finally:
+#         event_loop.close()
+
+# async def slow_function():
+#     time.sleep(2)
+#     print('slow_function_result')
+
 # if __name__ == '__main__':
-#     main()
+#         main()
+

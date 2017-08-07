@@ -90,7 +90,6 @@ class NavigationManager(tk.Frame):
 
 		self.nav 	= tk.Frame(self.parent, bg=gv.bckGround)
 		self.frame  = nav(self.nav, self)
-		gv.topFrame = self.frame.pubName
 		
 		if self.cFrame != None:			
 			self.cFrame.destroy()

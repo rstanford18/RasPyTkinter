@@ -11,7 +11,7 @@ class OverviewPage(tk.Frame):
     
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-
+        self.pubName     = 'Overview'  
         self.parent     = parent       
         self.nav       = nav
         self.mb         = mb(self)

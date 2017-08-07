@@ -9,7 +9,8 @@ from ClockThread import Clock as ck
 class LaunchMain(ttk.Frame):
     
     def __init__(self, parent, nav):
-        tk.Frame.__init__(self, parent, bg=gv.bckGround)   
+        tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        self.pubName     = 'Launch Pad'     
         self.nav   = nav
         self.parent = parent  
         self.ux     = self.nav.ux

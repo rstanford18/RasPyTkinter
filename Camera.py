@@ -10,13 +10,13 @@ from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
 import numpy
 from Camera_Popup import CameraPopUpView as cpv
-from copy import deepcopy
+
 
 ##############################################################################  
 class CameraView(tk.Frame):
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-###
+        self.pubName     = 'CameraView'
         self.parent      = parent       
         self.nav         = nav
         self.mb          = mb(self)
@@ -26,14 +26,19 @@ class CameraView(tk.Frame):
         self.objDataMgr  = self.nav.launch.ObjDataMgr 
         self.gridSizeCfg = [1,4,8,16]
         self.gridDict    = {1:(0,0), 4:(2,2), 8:(4,2) ,16:(4,4)}
+        self.frameList = []
+        print('init')
         self.han_init_ooe()
-        
-    def han_init_ooe(self):
+
+                            
+    def han_init_ooe(self, refresh=False):
         self.han_init_cam_fac()
         self.get_grid_pattern()
         self.han_init_frame_grid()
-        self.han_init_cam_toggle_widget()
-    
+        if not refresh:
+            self.han_init_cam_toggle_widget()
+        
+              
     def han_init_cam_toggle_widget(self):
         self.camToggle = CameraToggle(self)
     
@@ -63,9 +68,11 @@ class CameraView(tk.Frame):
                         highlightcolor="#686868", highlightthickness=1,)
         f.pack_propagate(0) # don't shrink
         f.place(x=x, y=y)
+    
         self.camList[item].han_set_item_value(item)
         self.camList[item].han_start_stream(f, w, h)
-                      
+        self.frameList.append(f)
+                
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
         oriH = h
@@ -106,78 +113,97 @@ class CameraView(tk.Frame):
                 item += 1
 
         return spacingDict[itemCount]
+    
+    def han_destroy_all_frames(self):
+        for i in self.frameList:
+            self.han_deactivate_feed_threads()
+            i.destroy()
+    
+    def han_deactivate_feed_threads(self):
+        for i in self.camList:
+            i.camfeedActive = False
+
 
 class CameraToggle(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)
         self.parent = parent       
-        self.cbVar = 1
-        print('init')
+        
+
         self.han_init_ooe()
     
             
     def han_init_ooe(self):
+        self.han_build_y_list()
         self.han_init_label_frame()
-        self.han_init_labels()
-        self.han_init_check_boxes()
-        
+        self.han__init_micro_frames()
         
     def han_init_label_frame(self):
         
         h = self.parent.totalH+5 if self.parent.totalH < self.parent.oriH-5 else self.parent.oriH-10
-        
-        
+
         self.group0 = tk.LabelFrame(self.parent ,text="Toggle Cameras",
                            width=160,
                            height=h,
                            font=gv.NORMAL_FONT,
                            bg=gv.bckGround,
                            fg=gv.forGround)
-        
+#         
         yOffSet = self.parent.yOffSet-6 
         y = yOffSet if yOffSet > 5 else 20
         self.group0.place(x=20, y=y)
-                          
+ 
+    def han_build_y_list(self):
+        
+        self.yList = []
+        for i in range(16):
+            if i == 0:
+                z = 5
+            else:
+                z = self.yList[-1]+35              
+            self.yList.append(z)
+                
+    def han__init_micro_frames(self):
+        for i in range(0, self.parent.camListLen):
+            self.f = tk.Frame(self.group0, height=30, width=150, highlightbackground=gv.bckGround, 
+                        highlightcolor=gv.bckGround, highlightthickness=1, bg=gv.bckGround)
+            self.f.pack_propagate(0) # don't shrink
+            self.f.place(x=5, y=self.yList[i])
+            self.camName = self.parent.camList[i].camName
+            self.han_init_labels()
+            self.han_init_check_boxes()
 
     def han_init_labels(self):
-        self.lbl = ui.make_label(self.group0, 20, 30, 
-                                 100, 20, text='testlbl', 
+        self.lbl = ui.make_label(self.f, 0, 5, 
+                                 120, 20, text=self.camName, 
                                 background=gv.bckGround,foreground=gv.forGround,
                                 font=gv.NORMAL_FONT, anchor="w")
 
 
 
     def han_init_check_boxes(self): 
-
-        self.checkBox = tk.Checkbutton(self.group0,
+        self.var = tk.BooleanVar()
+        self.var.set(gv.camElements[self.camName]['Enabled'])
+        self.checkBox = tk.Checkbutton(self.f,
                                     activeforeground=gv.forGround,
                                     background=gv.bckGround,                         
                                     activebackground=gv.bckGround, 
-                                    variable=self.cbVar,
-                                    command=self.han_check_box_action)
+                                    variable=self.var)
                                    
-        self.checkBox.place(x=125, y=35)
+        self.checkBox.place(x=125, y=5)
+        setattr(self.checkBox, 'camName', self.camName)
+        setattr(self.checkBox, 'state', self.var)
+        self.checkBox.bind('<ButtonRelease-1>', self.han_check_box_action)
 
-    def han_check_box_action(self):
-        print('action')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def han_set_checkbox_var(self):
+        pass
+    
+    
+    def han_check_box_action(self, event):
+        self.enl = False if event.widget.state.get() else True
+        gv.camElements[event.widget.camName]['Enabled'] = self.enl
+        self.parent.han_destroy_all_frames()
+        self.parent.han_init_ooe(refresh=True)
 
 ##############################################################################         
 class CameraFactory():
@@ -219,7 +245,7 @@ class CameraElementMeta():
         self.w       = None
         self.h       = None
         self.frame   = None
-    
+        self.camfeedActive = True
     def han_init_ooe(self):
         self.get_init_img()
     
@@ -239,7 +265,7 @@ class CameraElementMeta():
         self.han_panel_stream()      
            
     def han_activate_stream(self):
-        self.camThread = CameraStream(self.camName, self.camDict)
+        self.camThread = CameraStream(self)
     
     def get_active_frame(self):
         return self.camThread.displayImg
@@ -276,16 +302,18 @@ class CameraElementMeta():
         self.panel.configure(image=self.img)
         self.panel.image 		= self.img
         self.panel._backbuffer_ = self.img
-        self.panel.after(100, self.han_panel_stream)
+        if self.camfeedActive:
+            self.panel.after(100, self.han_panel_stream)
 
 ##############################################################################  
 class CameraStream():
       
-    def __init__(self, cameraName, camDict):              
+    def __init__(self, parent):              
+        self.parent        = parent
         self.get_connecting_img()
         self.displayImg    = self.connectingImg
-        self.camName       = cameraName
-        self.camDict       = camDict
+        self.camName       = parent.camName
+        self.camDict       = parent.camDict
         self.han_init_ooe()
             
     def han_init_ooe(self):
@@ -329,6 +357,7 @@ class CameraStream():
         cap = self.get_stream_data()
         keepAlive = True
         failCount = 0
+        parFrameNotTop = 0
         while True:
             if keepAlive == False:
                 cap = self.get_stream_data()
@@ -347,11 +376,21 @@ class CameraStream():
             except:
                 self.displayImg = self.failedImg      
                 failCount += 1
-#             if self.camName == 'BankOfAmerica':
-#                 print('Camera:',self.camName,'Thread State:','Alive', id(self.parent))
-            if failCount > 1000:
+            if self.camName == 'BankOfAmerica':
+                print('Camera:',self.camName,'Thread State:','Alive', id(self))
+            if failCount > 1000 or self.parent.camfeedActive == False:
                     break   
-                
+            
+            if gv.topFrame == 'CameraView':      
+
+                parFrameNotTop = 0
+            else:
+                parFrameNotTop += 1
+                if parFrameNotTop > 100:
+                    break
+            
+            
+               
             if cv2.waitKey(1) == 27:
                 exit(0)
         print('Camera:',self.camName,'Thread State:','Dead')

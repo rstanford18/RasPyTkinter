@@ -8,8 +8,9 @@ import UIWidgets as ui
 class LoginPage(ttk.Frame):
     
     def __init__(self, parent, nav):
-        tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-        nav.ux.han_change_title('Login')
+        tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        gv.topLevel      = id(self)
+        self.parentID    = id(self)  
         self.nav = nav
         self.parent = parent  
         #strup.changeTitle('Main Panel')

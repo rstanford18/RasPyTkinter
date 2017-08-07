@@ -25,7 +25,9 @@ from threading import Thread
 class ClimateMain(ttk.Frame):
     
     def __init__(self, parent, nav):
-        tk.Frame.__init__(self, parent, bg=gv.bckGround)   
+        tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        gv.topLevel      = id(self)
+        self.parentID    = id(self)
         self.nav = nav
         self.parent = parent
         self.ux = self.nav.ux

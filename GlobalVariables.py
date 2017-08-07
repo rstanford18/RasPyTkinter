@@ -33,46 +33,9 @@ AlarmArmed = False
 CountDownToAlarm = 30
 CountDownState = None
 
-PasswordFMT = 'rtsp://','admin:steritec@','192.168.6.103/Streaming/Channels/1'
 
 
 
-ActiveCameras = {
-                'BankOfAmerica':{
-                        'Camera Name':'BankOfAmerica',
-                                'Url':'http://72.48.229.3',
-                               'Port':'8887',
-                               'Path':'/mjpg/video.mjpg',                           
-                               'User':'',
-                           'Password':'',
-                            'Enabled':True},
-             'SteritecSecurity':{
-                        'Camera Name':'SteritecSecurity',
-                                'Url':'rtsp://192.168.6.103',
-                               'Port':'',
-                               'Path':'/Streaming/Channels/1',
-                               'User':'admin',
-                           'Password':'steritec',
-                            'Enabled':False},
-            'Doggy Day Care':{
-                        'Camera Name':'Doggy Day Care',
-                                'Url':'http://tails-waipio.viewnetcam.com',
-                               'Port':'50002',
-                               'Path':'/nphMotionJpeg?Resolution=640x480&Quality=Clarity',
-                               'User':'',
-                           'Password':'',
-                            'Enabled':True},
-
-            'FlaKK Rorvic Ferry':{
-                        'Camera Name':'FlaKK Rorvic Ferry',
-                                'Url':'http://193.213.13.69',
-                               'Port':'',
-                               'Path':'/mjpg/video.mjpg',
-                               'User':'',
-                           'Password':'',
-                            'Enabled':True},
-                 
-                               }
 
 
 piFactoryXConnect = {
@@ -129,7 +92,7 @@ imgOffline = "images/offline.jpg"
 
 password = 'MTIzNDU2'.encode('ascii')
 
-bluePrintPath = "images/bluePrint.gif"
+imgBluePrint = "images/bluePrint.gif"
 
 TagElementPath = 'bin/TagElement.omf'
 CamElementPath = 'bin/CamElement.omf'

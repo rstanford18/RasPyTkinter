@@ -6,13 +6,8 @@ import socket
 
 def getBluePrintPathforImage():
     
-    if socket.gethostname() == 'DESKTOP-AB68VHC':
-        return gv.personalPCPhoto
- 
-    if platform == 'darwin':
-        return gv.macPhotoPath
-    else:
-        return gv.winPhotoPath
+    return gv.imgBluePrint
+
 ###################################################
 def getPathForIni():
     
@@ -53,9 +48,9 @@ def handleGetAvailableTagName(CanvasTags):
             return i
 
 ###################################################
-def getBluePrintImageForWidge():
+def getBluePrintImageForWidget():
     from tkinter import PhotoImage
-    photo  = PhotoImage(file=gv.bluePrintPath)
+    photo  = PhotoImage(file=getBluePrintPathforImage())
     return photo
 
 ###################################################
@@ -102,9 +97,9 @@ def encodePassword(pWord):
 def isPasswordValid(pWord):
     
     encodedPass = encodePassword(pWord.encode('ascii'))
-    print(encodedPass)
+
     storedPass = gv.password
-    print(storedPass)
+
     if encodedPass == storedPass:
         return True
     else:

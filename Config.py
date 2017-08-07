@@ -4,13 +4,13 @@ import GlobalVariables as gv
 
 ###############################################################################
 def saveTagFile():
-    with open(gv.TagElement, 'wb') as handle:
+    with open(gv.TagElementPath, 'wb') as handle:
         pickle.dump(gv.tagElements, handle)
         print('Tag Element Save',gv.tagElements)
 ###############################################################################
 def loadTagFile():
     try:
-        with open(gv.TagElement, 'rb') as handle:
+        with open(gv.TagElementPath, 'rb') as handle:
             gv.tagElements = pickle.loads(handle.read())
     except:
         print('Pickle failed to load Tag Omf.')

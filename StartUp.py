@@ -146,11 +146,11 @@ class Launch():
         root.title(self.titleVar.get())
 
         root.geometry('%dx%d+%d+%d' % (1910, 1055, 1920, 0))
-        self.root = root
-        self.ux      = SystemInfo(root, self)
+        self.root       = root
+        self.ux         = SystemInfo(root, self)
         self.ObjDataMgr = MainObjectDataHandler(self)
             
-        self.nvm = NavigationManager(root, self)    
+        self.nvm        = NavigationManager(root, self)    
         root.mainloop()
     
     def han_change_title(self,pTitle):

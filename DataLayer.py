@@ -45,14 +45,20 @@ class MainObjectDataHandler(Thread):
         self.han_start_thread_link()
         
     def han_load_gpio_element(self):
-        self.parent.scan.han_load_GPIO_btn()
-    
+        try:
+            self.parent.scan.han_load_GPIO_btn()
+        except:
+            pass
     def han_stop_thread_link(self):
-        self.parent.scan.han_stop_tag_scan()
-    
+        try:
+            self.parent.scan.han_stop_tag_scan()
+        except:
+            pass
     def han_start_thread_link(self):
-        self.parent.scan.han_start_tag_scan()
-    
+        try:
+            self.parent.scan.han_start_tag_scan()
+        except:
+            pass
 
     def han_obj_data_init(self): 
         db = gv.tagElements
@@ -84,7 +90,7 @@ class MainObjectDataHandler(Thread):
         taglist = []
         for i in self.tagCanvasObj.find_all():
             if len(self.tagCanvasObj.gettags(i))==0:
-                navinue
+                continue
             tagName =  self.tagCanvasObj.gettags(i)[1]
             taglist.append(tagName)
         return taglist
@@ -215,11 +221,11 @@ class DataBaseDataHandler():
         self.canvas = self.parent.tagCanvasObj  
         for i in self.canvas.find_all():
             if len(self.canvas.gettags(i))==0:
-                navinue
+               continue
             try:
                 tagName =  self.canvas.gettags(i)[1]
             except:
-                navinue
+                continue
             try:
                 elementClass = gv.tagElements[tagName]
             except:
@@ -249,7 +255,7 @@ class DataBaseDataHandler():
 
     def han_db_save(self):
         self.han_db_obj_sync()
-        cf.saveConfigFile()
+        cf.saveTagFile()
 
     def han_item_remove(self):
         gv.tagElements.pop(self.tagName, None)

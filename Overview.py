@@ -98,7 +98,7 @@ class OverviewPage(tk.Frame):
             
     def han_init_tagpallet(self):  
         
-        self.photo = gf.getImageForWidget()
+        self.photo = gf.getBluePrintImageForWidget()
         self.w = self.photo.width()
         self.h = self.photo.height()     
         self.TagCvs = tp.TagCanvas(self, self.w, self.h)     

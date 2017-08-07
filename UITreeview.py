@@ -20,8 +20,8 @@ class TagManagerView():
         self.prevSelection = None
         style = ttk.Style()
         style.theme_use('clam')
-        style.configure('Treeview', background='black', 
-                fieldbackground='black', foreground='white')
+        style.configure('Treeview', background=gv.bckbround, 
+                fieldbackground=gv.bckbround, foreground='white')
     
     def initTreeView(self):
         self.tree = ttk.Treeview(self.frame, columns=('Tag Name'))

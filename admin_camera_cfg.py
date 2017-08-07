@@ -27,10 +27,11 @@ class AdminCameraCfg(tk.Frame):
         
         self.han_init_ooe()
 
-#         style = ttk.Style()
-#         style.theme_use('clam')
-#         style.configure('Treeview', background='black', 
-#                 fieldbackground='black', foreground='white')
+        style = ttk.Style()
+        style.theme_use('clam')
+        style.configure('Treeview', background=gv.bckbround, 
+                fieldbackground=gv.bckbround, foreground='white')
+        
     def han_init_ooe(self):
         self.han_init_main_frame()
         self.han_init_object_geometry()
@@ -170,11 +171,12 @@ class AdminCameraCfg(tk.Frame):
         self.activeCameras = gv.camElements
         
         for i in self.activeCameras:
+            print('i', i)
             camName = i
             camDict = self.activeCameras[i]
-            
+            gf.ppr(camDict)
             self.treeview.insert('', 'end', text='', 
-                 value=tuple([camDict[i] for i in self.itemOrder]))
+                                 value=tuple([camDict[i] for i in self.itemOrder]))
   
     def han_load_text_entry_widgets(self):
         for i in range(len(self.txtList)):

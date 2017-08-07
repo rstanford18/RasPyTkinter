@@ -3,6 +3,16 @@ import GlobalVariables as gv
 from sys import platform
 import base64
 import socket
+import pprint
+
+        
+        
+def ppr(value):        
+        
+    pp = pprint.PrettyPrinter(indent=4)
+    pp.pprint(value)
+
+
 
 def getBluePrintPathforImage():
     

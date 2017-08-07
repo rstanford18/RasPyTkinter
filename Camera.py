@@ -90,9 +90,7 @@ class CameraView(tk.Frame):
                     prevX = x
                 spacingDict[item] = {'x':x, 'y':y, 'w':w, 'h':h}
                 item += 1
-#         import pprint
-#         pp = pprint.PrettyPrinter(indent=4)
-#         pp.pprint(spacingDict)
+
         return spacingDict[itemCount]
 
 ##############################################################################         

@@ -1,3 +1,6 @@
+
+
+
 tagToGpioXConnect = {}
 
 
@@ -16,7 +19,8 @@ tagElementStructure = {
                         }
 
 camElements = {}
-camElementStructure = ['Camera Name','Url','Port','Path','User','Password','Enabled']
+camElementStructure = ['Camera Name', ' Url', 'Port', 
+                       'Path', 'User', 'Password','Enabled']
 
 
 

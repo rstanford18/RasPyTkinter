@@ -68,8 +68,12 @@ class TagManagerView():
         
     def getCurrentTagName(self, event):
         self.selection = self.tree.set(self.tree.identify_row(event.y))
-        tagName = self.selection['Tag']
-        return tagName
+        
+        if self.selection:
+            tagName = self.selection['Tag']
+            return tagName
+
+        return self.selection
                 
     def selectItem(self, tagName):
          

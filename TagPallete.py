@@ -1,22 +1,21 @@
-import GlobalFunctions as gf
-import GlobalVariables as gv
+import GlobalFunctions  as gf
+import GlobalVariables  as gv
+import tkinter          as tk
 from tkinter import *
-import tkinter as tk
 from PopupMenus import WidgetPopup as wp
 
 ################################################################################ 
 class CreateTagElementMeta():
-    
     def __init__(self, tagName):
-
         self.tagName     = tagName
         self.valueDict   = {}
         self.han_create_attr_from_structure()
         
     def han_create_attr_from_structure(self):
         for i in gv.tagElementStructure:
-            setattr(self, i, None)
-            self.valueDict[i] = None
+            value = gv.tagElementStructure[i]
+            setattr(self, i, value)
+            self.valueDict[i] = value
                 
     def get_value_dict(self):
         return self.valueDict 
@@ -31,9 +30,9 @@ class TagElementFactory():
     def __init__(self, parent, tagName):
         
         self.parent    = parent
-        self.canvas    = self.parent.canvas
-        self.w         = self.parent.w
-        self.h         = self.parent.h
+        self.canvas    = parent.canvas
+        self.w         = parent.w
+        self.h         = parent.h
         self.shapeType = 'Rectangle'
         self.tagName   = tagName
         self.shape     = self.canvas.create_rectangle
@@ -42,7 +41,7 @@ class TagElementFactory():
                     
     def createTagElement(self):
         elementMeta = CreateTagElementMeta(self.tagName)
-        
+        print(elementMeta)
         xRange = (0,int(self.w/2))
         randomX = gf.randomCoord(xRange)
         
@@ -160,7 +159,7 @@ class TagCanvas(tk.Frame):
         self.parent.han_obj_hover_alert(tagName)
         self.canvas.itemconfig(tagName, fill='grey')
         
-        mouseX, mouseY = (event.x,event.y)
+        mouseX, mouseY = (event.x, event.y)
         x1, y1, x2, y2 = self.getWidgetCoords(tagName)
         
         if mouseX > (x2-5) and mouseX <= x2 or mouseY <= y2 and mouseY > (y2-5):
@@ -200,6 +199,6 @@ class TagCanvas(tk.Frame):
 
     def getObjectGeometry(self, tagName, var=None):
         coords = self.getWidgetCoords(tagName)
-        return gf.getGeometryFromCoor(coords,var)
+        return gf.getGeometryFromCoor(coords, var)
     
     

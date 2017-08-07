@@ -10,14 +10,9 @@ from MenuBar import MainMenuBar as mb
 class OverviewPage(tk.Frame):
     
     def __init__(self, parent, nav):
-<<<<<<< HEAD
-        tk.Frame.__init__(self, parent, bg=gv.bckGround)
-        self.title      = 'Security System'
-=======
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
         gv.topLevel      = id(self)
         self.parentID    = id(self)  
->>>>>>> dc6073b07d71ce7158b3f8f6af9a0b0830baaaf3
         self.parent     = parent       
         self.nav        = nav
         self.mb         = mb(self)

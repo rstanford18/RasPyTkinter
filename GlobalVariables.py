@@ -19,7 +19,7 @@ tagElementStructure = {
                         }
 
 camElements = {}
-camElementStructure = ['Camera Name', ' Url', 'Port', 
+camElementStructure = ['Camera Name', 'Url', 'Port', 
                        'Path', 'User', 'Password','Enabled']
 
 

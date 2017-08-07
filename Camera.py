@@ -75,25 +75,25 @@ class CameraView(tk.Frame):
         pw = w-(xPadStart*2)
         
         #Lets figure out the area we are working with.
-        colSquare = int(pw/c)
-        rowSquare = int(h/r)
+        colSquare = int(pw / c)
+        rowSquare = int(h  / r)
         
         w = min(colSquare,rowSquare)
         h = w
-        yOffset = (oriH - (h*r))/2
-        xPadStart = xPadStart+((pw-(c*w))/2)
+        yOffset = ( oriH - ( h * r )) / 2
+        xPadStart = xPadStart + ((pw - (c * w)) / 2)
 
         item = 0
         prevX = 0
         for k in range(0,r):
-            y = (k*h)+yOffset
+            y = ( k * h ) + yOffset
             for i in range(0,c):
                 if i == 0:
-                    x = xPadStart
-                    prevX = x
+                    x       = xPadStart
+                    prevX   = x
                 else:
-                    x = prevX+w
-                    prevX = x
+                    x 		= prevX+w
+                    prevX	 = x
                 spacingDict[item] = {'x':x, 'y':y, 'w':w, 'h':h}
                 item += 1
 
@@ -194,9 +194,8 @@ class CameraElementMeta():
     
     def han_panel_stream(self):
         self.get_init_img()
-        #print(self.camName, 'Panel Stream Alive')
         self.panel.configure(image=self.img)
-        self.panel.image = self.img
+        self.panel.image 		= self.img
         self.panel._backbuffer_ = self.img
         self.panel.after(100, self.han_panel_stream)
 

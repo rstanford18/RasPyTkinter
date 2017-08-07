@@ -66,6 +66,7 @@ class SystemInfo():
 		return coord
 
 	def get_popup_location(self, popUpWidth, popUpHeight):
+		self.root.update_idletasks()
 		self.get_curr_coords()
 		x = int(self.x + ( self.w / 2 ) - ( popUpWidth   / 2 ))
 		y = int(self.y + ( self.h / 2 ) - ( popUpHeight  / 2 ))

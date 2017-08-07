@@ -27,10 +27,6 @@ class AdminCameraCfg(tk.Frame):
         
         self.han_init_ooe()
 
-#         style = ttk.Style()
-#         style.theme_use('clam')
-#         style.configure('Treeview', background=gv.bckGround, 
-#                 fieldbackground=gv.bckGround, foreground='white')
         
     def han_init_ooe(self):
         self.han_init_main_frame()

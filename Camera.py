@@ -32,6 +32,10 @@ class CameraView(tk.Frame):
         self.han_init_cam_fac()
         self.get_grid_pattern()
         self.han_init_frame_grid()
+        self.han_init_cam_toggle_widget()
+    
+    def han_init_cam_toggle_widget(self):
+        self.camToggle = CameraToggle(self)
     
     def han_init_cam_fac(self):
         self.camFac     = CameraFactory(self)
@@ -65,6 +69,7 @@ class CameraView(tk.Frame):
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
         oriH = h
+        self.oriH = oriH  #used for sibling widgets 
         if size == 1:
             spacingDict = {}
             spacingDict[0] = {'x':(w/2)/2,'y':0,'w':h,'h':h}                              
@@ -82,7 +87,10 @@ class CameraView(tk.Frame):
         h = w
         yOffset = ( oriH - ( h * r )) / 2
         xPadStart = xPadStart + ((pw - (c * w)) / 2)
-
+        
+        self.yOffSet = yOffset #used for sibling widgets 
+        self.totalH  = ( h * r ) #used for sibling widgets 
+        
         item = 0
         prevX = 0
         for k in range(0,r):
@@ -98,6 +106,78 @@ class CameraView(tk.Frame):
                 item += 1
 
         return spacingDict[itemCount]
+
+class CameraToggle(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, parent, bg=gv.bckGround)
+        self.parent = parent       
+        self.cbVar = 1
+        print('init')
+        self.han_init_ooe()
+    
+            
+    def han_init_ooe(self):
+        self.han_init_label_frame()
+        self.han_init_labels()
+        self.han_init_check_boxes()
+        
+        
+    def han_init_label_frame(self):
+        
+        h = self.parent.totalH+5 if self.parent.totalH < self.parent.oriH-5 else self.parent.oriH-10
+        
+        
+        self.group0 = tk.LabelFrame(self.parent ,text="Toggle Cameras",
+                           width=160,
+                           height=h,
+                           font=gv.NORMAL_FONT,
+                           bg=gv.bckGround,
+                           fg=gv.forGround)
+        
+        yOffSet = self.parent.yOffSet-6 
+        y = yOffSet if yOffSet > 5 else 20
+        self.group0.place(x=20, y=y)
+                          
+
+    def han_init_labels(self):
+        self.lbl = ui.make_label(self.group0, 20, 30, 
+                                 100, 20, text='testlbl', 
+                                background=gv.bckGround,foreground=gv.forGround,
+                                font=gv.NORMAL_FONT, anchor="w")
+
+
+
+    def han_init_check_boxes(self): 
+
+        self.checkBox = tk.Checkbutton(self.group0,
+                                    activeforeground=gv.forGround,
+                                    background=gv.bckGround,                         
+                                    activebackground=gv.bckGround, 
+                                    variable=self.cbVar,
+                                    command=self.han_check_box_action)
+                                   
+        self.checkBox.place(x=125, y=35)
+
+    def han_check_box_action(self):
+        print('action')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ##############################################################################         
 class CameraFactory():

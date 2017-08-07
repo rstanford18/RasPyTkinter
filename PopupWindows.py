@@ -42,7 +42,7 @@ class SizePopupWindow(tk.Toplevel):
     def positionEntry(self):
         
         gp1y = 5
-        self.group1 = LabelFrame(self.frame ,text="Position",
+        self.group1 = LabelFrame(self ,text="Position",
                            width=170,
                            height=50,
                            font=gv.NORMAL_FONT,
@@ -68,7 +68,7 @@ class SizePopupWindow(tk.Toplevel):
     def sizeEntry(self):
         
         gp2y = 5
-        self.group2 = LabelFrame(self.frame,text="Size",
+        self.group2 = LabelFrame(self, text="Size",
                            width=170,
                            height=50,
                            font=gv.NORMAL_FONT,
@@ -105,10 +105,10 @@ class SizePopupWindow(tk.Toplevel):
         event.widget.config(bg=gv.bckGround, fg='white')
         
     def updateWidget(self, event):        
-        x = self.text1.get(1.0,'end')[:-1].strip()
-        y = self.text2.get(1.0,'end')[:-1].strip()
-        w = self.text3.get(1.0,'end')[:-1].strip()
-        h = self.text4.get(1.0,'end')[:-1].strip()
+        x = self.text1.get().strip()
+        y = self.text2.get().strip()
+        w = self.text3.get().strip()
+        h = self.text4.get().strip()
         sizeTuple = (int(x),int(y),int(w),int(h))
         self.callPar.setObjectGeometry(sizeTuple, self.tagName)
         self.closeWindow(event)

@@ -17,6 +17,7 @@ class CameraPopUpView(tk.Toplevel):
        
         self.protocol("WM_DELETE_WINDOW", self.han_destroy_call_back)
         self.grab_set()
+        self.focus()
         self.parent      = parent
         self.parent.panel.unbind('<ButtonRelease-1>')      
         self.ux          = parent.ux
@@ -56,16 +57,10 @@ class CameraPopUpView(tk.Toplevel):
     
     def han_init_frame_grid(self):
         for i in range(0, self.camListLen):
-            cGeo = self.ux.get_curr_coords('all')
+            cGeo    = self.ux.get_curr_coords('all')
             geoDict = self.han_grid_spacing(self.gridSize,i, cGeo[2], cGeo[3])
             h = geoDict['h']
             w = geoDict['w']
-#             x = geoDict['x']
-#             y = geoDict['y']
-#             f = tk.Frame(self, height=self.h, width=self.w, highlightbackground="#00FF00", 
-#                             highlightcolor="#00FF00", highlightthickness=1,)
-#             f.pack_propagate(0) # don't shrink
-#             f.place(x=0, y=0)
             self.camList[i].han_init_on_popup(self, w, h)
                   
     def han_grid_spacing(self, size, itemCount, w, h):

@@ -16,6 +16,7 @@ class CameraPopUpView(tk.Toplevel):
         tk.Toplevel.__init__(self, bg=gv.bckGround)   
        
         self.protocol("WM_DELETE_WINDOW", self.han_destroy_call_back)
+        self.grab_set()
         self.parent      = parent
         self.parent.panel.unbind('<ButtonRelease-1>')      
         self.ux          = parent.ux

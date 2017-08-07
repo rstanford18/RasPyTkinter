@@ -170,12 +170,12 @@ class CameraElementMeta():
             img      = Image.fromarray(img)
             if self.w != None:
                 basewidth = self.w
-                wpercent = (basewidth/float(img.size[0]))
-                hsize = int((float(img.size[1])*float(wpercent)))
-                img = img.resize((basewidth,hsize), Image.ANTIALIAS)
-                self.img = ImageTk.PhotoImage(img)
+                wpercent  = (basewidth/float(img.size[0]))
+                hsize     = int((float(img.size[1])*float(wpercent)))
+                img       = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                self.img  = ImageTk.PhotoImage(img)
             else:    
-                self.img = ImageTk.PhotoImage(img)
+                self.img  = ImageTk.PhotoImage(img)
         except cv2.error as e:
             pass
     
@@ -186,15 +186,13 @@ class CameraElementMeta():
 
         
     def han_open_popup(self, event=None):
-#         self.panel.unbind('<ButtonRelease-1>',)
         cpv(self)
        
     def han_set_item_value(self, item):
         self.item = item
     
     def han_panel_stream(self):
-        self.get_init_img()
-        #print(self.camName, 'Panel Stream Alive')
+        #self.get_init_img()
         self.panel.configure(image=self.img)
         self.panel.image = self.img
         self.panel._backbuffer_ = self.img

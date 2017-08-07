@@ -10,7 +10,8 @@ class LaunchMain(ttk.Frame):
     
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)
-        self.pubName     = 'Launch Pad'     
+        gv.topLevel      = id(self)
+        self.parentID    = id(self)      
         self.nav   = nav
         self.parent = parent  
         self.ux     = self.nav.ux

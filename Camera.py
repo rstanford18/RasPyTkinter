@@ -16,7 +16,8 @@ from Camera_Popup import CameraPopUpView as cpv
 class CameraView(tk.Frame):
     def __init__(self, parent, nav):
         tk.Frame.__init__(self, parent, bg=gv.bckGround)   
-        self.pubName     = 'CameraView'
+        gv.topLevel      = id(self)
+        self.parentID    = id(self)
         self.parent      = parent       
         self.nav         = nav
         self.mb          = mb(self)
@@ -27,9 +28,9 @@ class CameraView(tk.Frame):
         self.gridSizeCfg = [1,4,8,16]
         self.gridDict    = {1:(0,0), 4:(2,2), 8:(4,2) ,16:(4,4)}
         self.frameList = []
-        print('init')
+        
         self.han_init_ooe()
-
+        print(id(self))
                             
     def han_init_ooe(self, refresh=False):
         self.han_init_cam_fac()
@@ -314,15 +315,16 @@ class CameraStream():
         self.displayImg    = self.connectingImg
         self.camName       = parent.camName
         self.camDict       = parent.camDict
+        self.breakbool     = False
         self.han_init_ooe()
-            
+
     def han_init_ooe(self):
         self.han_get_cam_params()
         self.han_construct_url()
         self.get_failed_img()
         self.k = Thread(target=self.han_get_cam_feed)     
         self.k.start()
-    
+           
     def get_connecting_img(self):
         img = Image.open(gv.imgConnect).convert("L")
         arr = numpy.array(img)
@@ -376,19 +378,15 @@ class CameraStream():
             except:
                 self.displayImg = self.failedImg      
                 failCount += 1
-            if self.camName == 'BankOfAmerica':
-                print('Camera:',self.camName,'Thread State:','Alive', id(self))
+#             if self.camName == 'BankOfAmerica':
+#                 print('Camera:',self.camName,'Thread State:','Alive', id(self))
             if failCount > 1000 or self.parent.camfeedActive == False:
-                    break   
+                break   
             
-            if gv.topFrame == 'CameraView':      
+            if gv.topLevel != self.parent.parent.parent.parentID:
+                break
+                
 
-                parFrameNotTop = 0
-            else:
-                parFrameNotTop += 1
-                if parFrameNotTop > 100:
-                    break
-            
             
                
             if cv2.waitKey(1) == 27:

@@ -58,30 +58,41 @@ class CameraView(tk.Frame):
                   
     def han_grid_spacing(self, size, itemCount, w, h):
         spacingDict = {}
-        
+        oriH = h
         if size == 1:
             spacingDict = {}
             spacingDict[0] = {'x':(w/2)/2,'y':0,'w':h,'h':h}                              
             return spacingDict[0]
         
         c, r = self.gridDict[size]
+        xPadStart = 200
+        pw = w-(xPadStart*2)
         
-        objW = int(w/c)
-        objH = int(h/r)
+        #Lets figure out the area we are working with.
+        colSquare = int(pw/c)
+        rowSquare = int(h/r)
+        
+        w = min(colSquare,rowSquare)
+        h = w
+        yOffset = (oriH - (h*r))/2
+        xPadStart = xPadStart+((pw-(c*w))/2)
+
         item = 0
         prevX = 0
         for k in range(0,r):
-            y = k*objH
+            y = (k*h)+yOffset
             for i in range(0,c):
                 if i == 0:
-                    x = int((w-h)/2)
+                    x = xPadStart
                     prevX = x
                 else:
-                    x = prevX+objH
+                    x = prevX+w
                     prevX = x
-                spacingDict[item] = {'x':x,'y':y,'w':objH,'h':objH}
+                spacingDict[item] = {'x':x, 'y':y, 'w':w, 'h':h}
                 item += 1
-         
+#         import pprint
+#         pp = pprint.PrettyPrinter(indent=4)
+#         pp.pprint(spacingDict)
         return spacingDict[itemCount]
 
 ##############################################################################         
@@ -97,14 +108,16 @@ class CameraFactory():
         self.han_create_camera()
        
     def get_active_cameras(self):
-        return gv.ActiveCameras
+        return gv.camElements
     
     def han_create_camera(self):
         
         self.activeCams =  self.get_active_cameras()
         
         for i in self.activeCams:
+           
             if self.activeCams[i].get('Enabled', False):
+                
                 cam = CameraElementMeta(self, i, self.activeCams[i])
                 self.camList.append(cam)
       
@@ -209,7 +222,7 @@ class CameraStream():
         if self.user != '':
             self.port = ':'+self.port if self.port != '' else ''
             self.url = self.url.split('//')
-            self.url = self.url[0]+'//'+self.user+':'+self.passw+'@'+self.url[1]
+            self.url = self.url[0]+'//'+self.user+':'+self.password+'@'+self.url[1]
             self.url = '%s%s%s' % (self.url, self.port, self.path)
    
     def get_stream_data(self):

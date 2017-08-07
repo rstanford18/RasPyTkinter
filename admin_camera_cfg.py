@@ -3,7 +3,7 @@ import tkinter as tk
 import GlobalVariables as gv
 import GlobalFunctions as gf
 import UIWidgets as ui
-
+import Config as cf
 from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
 from PopupMenus import AdminCameraCfgPopup as accp
@@ -57,7 +57,7 @@ class AdminCameraCfg(tk.Frame):
         startx = 15
         spacer = 15
         self.sizeList = [150,240,50,325,50,80,80]
-        self.itemOrder = gv.CameraOrderStruct
+        self.itemOrder = gv.camElementStructure
         
         l = []
         
@@ -73,7 +73,7 @@ class AdminCameraCfg(tk.Frame):
         self.tree = ttk.Treeview(self.frame, columns=tuple(self.itemOrder))
 
         self.tree.heading('#0', text='idx')
-        self.tree.column('#0', minwidth=0, width=0, stretch=True)        
+        self.tree.column('#0', minwidth=0, width=0, stretch=False)        
         
         for i in range(len(self.itemOrder)):
             
@@ -143,16 +143,22 @@ class AdminCameraCfg(tk.Frame):
                                        self.han_load_edit_values, text='Edit', 
                       bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)        
         
-        self.B4 = ui.make_OpenCloseBtn(self, 1525, 440, 75, 25, self.han_delete_camera_in_db, text='Delete', 
+        self.B4 = ui.make_OpenCloseBtn(self, 1525, 440, 75, 25, 
+                                       self.han_delete_camera_in_db, text='Delete', 
                       bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)       
-   
+        
+        self.B5 = ui.make_OpenCloseBtn(self, 1525, 750, 75, 25, 
+                                       self.han_save_changes_to_db, text='Save', 
+                      bg=gv.bckGround, fg='white', font=gv.LARGE_FONT)
+        
+        
     def han_init_popup(self, event):
         try:
             self.accp = accp(self)              
             self.accp.popup(event)
         except:
             pass        
-    
+
     def han_bind_tree(self):
         self.tree.bind('<Button-2>', self.highLightSelection)
         self.tree.bind('<Button-3>', self.highLightSelection)
@@ -161,7 +167,7 @@ class AdminCameraCfg(tk.Frame):
                     
     def han_load_active_camera_db(self):
         
-        self.activeCameras = gv.ActiveCameras
+        self.activeCameras = gv.camElements
         
         for i in self.activeCameras:
             camName = i
@@ -184,7 +190,7 @@ class AdminCameraCfg(tk.Frame):
         self.B1.config(text='Update')
         
     def han_load_option_widget(self):
-        self.optionVar.set(self.selRow[-1])
+        self.optionVar.set(str(self.selRow[-1]))
        
     def han_popup_action_route(self, action):
         if action == 'edit':
@@ -208,14 +214,15 @@ class AdminCameraCfg(tk.Frame):
     def han_add_camera_to_db(self):
         self.get_entry_values()
 
-        if self.newRow[0] not in list(gv.ActiveCameras.keys()):
-            gv.ActiveCameras[self.newRow[0]] = {self.itemOrder[0]:self.newRow[0],
+        if self.newRow[0] not in list(gv.camElements.keys()):
+            gv.camElements[self.newRow[0]] = {self.itemOrder[0]:self.newRow[0],
                                                 self.itemOrder[1]:self.newRow[1],
                                                 self.itemOrder[2]:self.newRow[2],
                                                 self.itemOrder[3]:self.newRow[3],
                                                 self.itemOrder[4]:self.newRow[4],
                                                 self.itemOrder[5]:self.newRow[5],
                                                 self.itemOrder[6]:self.newRow[6]}
+            
             self.han_clear_entry_widgets()
             for item in self.treeview.get_children():
                 self.treeview.delete(item)
@@ -225,19 +232,23 @@ class AdminCameraCfg(tk.Frame):
         
     
     def han_update_camera_in_db(self):
-        gv.ActiveCameras.pop(self.camName)
+        gv.camElements.pop(self.camName)
         self.han_add_camera_to_db()
         
     def han_delete_camera_in_db(self, event=None):
         self.selIdx  = self.tree.focus()
         self.camName = self.treeview.item(self.selIdx)['values'][0]
-        gv.ActiveCameras.pop(self.camName)
+        gv.camElements.pop(self.camName)
+        
         for item in self.treeview.get_children():
             self.treeview.delete(item)
         
         self.han_load_active_camera_db()
         self.han_clear_entry_widgets()
-        
+    
+    def han_save_changes_to_db(self, event=None):
+        cf.saveCamFile()
+               
     def get_entry_values(self):
         l = []
         for i in range(len(self.txtList)):
@@ -247,9 +258,10 @@ class AdminCameraCfg(tk.Frame):
             except:
                 l.append('')
         try:
-            l.append(self.optValue)
+            optVal = False if 'F' in self.optionVar.get() else True
+            l.append(optVal)
         except:
-            l.append('True')      
+            l.append(True)      
         self.newRow = l   
 
     def get_selected_item(self):

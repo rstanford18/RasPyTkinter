@@ -16,10 +16,11 @@ class MainMenuBar(Menu):
         self.menubar = Menu(self.parent)
         self.menubar.config(bg=gv.bckGround)
         filemenu = Menu(self.menubar, tearoff=0)
-        filemenu.add_command(label="Settings", command='popupPref')
+        filemenu.add_command(label="Launch Pad", command=self.nav.showLaunchPad)
         filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.parent.parent.master.destroy)
+        
         filemenu.add_command(label="Logout", command=self.callLoginPage)
+        filemenu.add_command(label="Exit", command=self.parent.parent.master.destroy)
         self.menubar.add_cascade(label="File", menu=filemenu)
     
     def callLoginPage(self):

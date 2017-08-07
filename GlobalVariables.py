@@ -2,8 +2,6 @@ tagToGpioXConnect = {}
 
 
 tagElements = {}
-
-
 tagElementStructure = {
                        'x1':0,
                        'y1':0,
@@ -16,6 +14,11 @@ tagElementStructure = {
                'GPIOParent':None,
               'Description':None
                         }
+
+camElements = {}
+camElementStructure = ['Camera Name','Url','Port','Path','User','Password','Enabled']
+
+
 
 
 gpioIndex = [i for i in range(1-27)]
@@ -33,7 +36,7 @@ CountDownState = None
 PasswordFMT = 'rtsp://','admin:steritec@','192.168.6.103/Streaming/Channels/1'
 
 
-CameraOrderStruct = ['Camera Name','Url','Port','Path','User','Password','Enabled']
+
 ActiveCameras = {
                 'BankOfAmerica':{
                         'Camera Name':'BankOfAmerica',
@@ -128,8 +131,8 @@ password = 'MTIzNDU2'.encode('ascii')
 
 bluePrintPath = "images/bluePrint.gif"
 
-configFile = 'bin/config.ini'
-
+TagElementPath = 'bin/TagElement.omf'
+CamElementPath = 'bin/CamElement.omf'
 
 ###################################################
 

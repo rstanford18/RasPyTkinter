@@ -133,7 +133,8 @@ class Launch():
     def __init__(self):
         
         root = tk.Tk()
-        cf.loadConfigFile()
+        cf.loadTagFile()
+        cf.loadCamFile()
         self.titleVar = tk.StringVar()
         self.titleVar.set("SA Smart Home - Login")
         self.isGPIOOn = isGPIOOn

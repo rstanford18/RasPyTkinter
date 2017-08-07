@@ -3,15 +3,27 @@ import GlobalFunctions as gf
 import GlobalVariables as gv
 
 ###############################################################################
-def saveConfigFile():
-    with open(gv.configFile, 'wb') as handle:
+def saveTagFile():
+    with open(gv.TagElement, 'wb') as handle:
         pickle.dump(gv.tagElements, handle)
-        print('Config Save',gv.tagElements)
+        print('Tag Element Save',gv.tagElements)
 ###############################################################################
-def loadConfigFile():
+def loadTagFile():
     try:
-        with open(gv.configFile, 'rb') as handle:
+        with open(gv.TagElement, 'rb') as handle:
             gv.tagElements = pickle.loads(handle.read())
     except:
-        print('Pickle failed to load INI.')
+        print('Pickle failed to load Tag Omf.')
 ###############################################################################
+
+def saveCamFile():
+    with open(gv.CamElementPath, 'wb') as handle:
+        pickle.dump(gv.camElements, handle)
+        print('Cam Element Save',gv.camElements)
+###############################################################################
+def loadCamFile():
+    try:
+        with open(gv.CamElementPath, 'rb') as handle:
+            gv.camElements = pickle.loads(handle.read())
+    except:
+        print('Pickle failed to load Cam Omf.')

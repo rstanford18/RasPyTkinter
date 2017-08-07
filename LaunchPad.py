@@ -30,10 +30,10 @@ class LaunchMain(ttk.Frame):
         sh = self.sh
         h1,h2 = (sh,sh+(w))
               
-        self.B1 = ui.LaunchPadBtn(self,'Security',1,l,h1)
-        self.B2 = ui.LaunchPadBtn(self,'Climate',2,m,h1)
-        self.B3 = ui.LaunchPadBtn(self,'Cameras',3,r,h1)
+        self.B1 = ui.LaunchPadBtn(self, 'Security', 1,  l,  h1)
+        self.B2 = ui.LaunchPadBtn(self, 'Climate',  2,  m,  h1)
+        self.B3 = ui.LaunchPadBtn(self, 'Cameras',  3,  r,  h1)
         
-        self.B4 = ui.LaunchPadBtn(self,'Lighting',4,l,h2)
-        self.B5 = ui.LaunchPadBtn(self,'Listen',5,m,h2)
-        self.B6 = ui.LaunchPadBtn(self,'Admin',6,r,h2)
+        self.B4 = ui.LaunchPadBtn(self, 'Lighting', 4,  l,  h2)
+        self.B5 = ui.LaunchPadBtn(self, 'Listen',   5,  m,  h2)
+        self.B6 = ui.LaunchPadBtn(self, 'Admin',    6,  r,  h2)

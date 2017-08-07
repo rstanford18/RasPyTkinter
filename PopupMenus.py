@@ -15,7 +15,7 @@ class WidgetPopup(Menu):
         pw.SizePopupWindow(self)
 
     def menu_two(self):
-        print( "two...")
+        print(self.getTagName())
 
     def menu_three(self):
         pw.GPIOBind(self)

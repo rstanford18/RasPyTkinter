@@ -17,7 +17,7 @@ class OverviewPage(tk.Frame):
         self.mb         = mb(self)
         self.menu       = nav.parent.config(menu=self.mb.getMenu()) 
         self.ux         = self.nav.ux
-        self.ux.han_change_title('Launch Pad')
+        self.ux.han_change_title('Security System')
         self.objDataMgr = self.nav.launch.ObjDataMgr       
       
         self.han_init_sequence()

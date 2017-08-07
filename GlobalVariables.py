@@ -108,7 +108,7 @@ NORMAL_FONT=("Verdana",10)
 SMALL_FONT=("Verdana",8)
 
 ###################################################
-
+fullscreen = False
 bckGround = "#333"
 forGround = "#FFF"
 forGrdRed = "#F00"

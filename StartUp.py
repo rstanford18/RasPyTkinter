@@ -142,11 +142,10 @@ class Launch():
         if self.isGPIOOn:
             self.scan = tb.GPIOSimulator(self)
             self.scan.startUXIndicatorStatus()
-        #root.attributes('-fullscreen', True)
+        root.attributes('-fullscreen', gv.fullscreen)
         root.title(self.titleVar.get())
 
         root.geometry('%dx%d+%d+%d' % (1910, 1055, 1920, 0))
-#         self.var.set(root.title())
         self.root = root
         self.ux      = SystemInfo(root, self)
         self.ObjDataMgr = MainObjectDataHandler(self)

@@ -10,7 +10,7 @@ from ClockThread import Clock as ck
 from MenuBar import MainMenuBar as mb
 import numpy
 from Camera_Popup import CameraPopUpView as cpv
-
+import time
 
 ##############################################################################  
 class CameraView(tk.Frame):
@@ -386,9 +386,33 @@ class CameraStream():
             if gv.topLevel != self.parent.parent.parent.parentID:
                 break
                 
-
-            cv2.waitKey(25)
+            time.sleep(.25)
+            #cv2.waitKey(25)
                
             if cv2.waitKey(1) == 27:
                 exit(0)
-        print('Camera:',self.camName,'Thread State:','Dead')
+        lenCam = len(self.camName)
+        v = 40 - lenCam
+        cName = self.camName+(' '*v) 
+        print('Camera:',cName,'Thread State:','Dead')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

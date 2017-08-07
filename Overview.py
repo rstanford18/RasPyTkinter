@@ -74,7 +74,7 @@ class OverviewPage(tk.Frame):
     def han_print_canvas_data(self, event):
         for i in self.canvas.find_all():
             if len(self.canvas.gettags(i))==0:
-                navinue         
+                continue         
             tagName =  self.canvas.gettags(i)[1]
             print(self.canvas.gettags(i))
             x1, y1, x2, y2 = self.canvas.coords(tagName)

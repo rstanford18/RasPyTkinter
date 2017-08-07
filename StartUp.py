@@ -32,10 +32,10 @@ class SystemInfo():
     def han_change_title(self, title):
         self.nav.han_change_title(title)
 
-    def getHorizontalCenter(self, px):
+    def get_horizontal_center(self, px):
         return int((self.sw/2)-(px/2))
     
-    def getVerticalCenter(self,px):   
+    def get_vertical_center(self,px):   
         return int((self.sh/2)-(px/2))
    
     def get_curr_coords(self, coord=None):
@@ -67,7 +67,7 @@ class SystemInfo():
         
         return
         
-    def getPopUpLocation(self, w, h):
+    def get_popup_location(self, w, h):
         
         self.get_curr_coords()
         popUpWidth  = w
@@ -91,9 +91,9 @@ class NavigationManager(tk.Frame):
         self.launch = launch
         self.ux     = self.launch.ux 
        
-        self.showFrame(lp)
+        self.show_frame(lp)
 
-    def showFrame(self, nav):
+    def show_frame(self, nav):
 
         if self.cFrame != None:
             self.nav.pack_forget()
@@ -106,26 +106,26 @@ class NavigationManager(tk.Frame):
         self.frame.pack(fill=tk.BOTH, expand=1)
         self.frame.tkraise()
                    
-    def showOverviewPage(self):
-        self.showFrame(op)
+    def show_overview_page(self):
+        self.show_frame(op)
     
-    def showLoginPage(self):
-        self.showFrame(lp)
+    def show_login_page(self):
+        self.show_frame(lp)
               
-    def showLaunchPad(self):
-        self.showFrame(lm)
+    def show_launch_pad(self):
+        self.show_frame(lm)
     
-    def showClimatePage(self):
-        self.showFrame(cm)
+    def show_climate_page(self):
+        self.show_frame(cm)
     
-    def showCameraPage(self):
-        self.showFrame(camv)
+    def show_camera_page(self):
+        self.show_frame(camv)
     
-    def showAdminPage(self):
-        self.showFrame(adm)
+    def show_admin_page(self):
+        self.show_frame(adm)
     
-    def showAdminCameraPage(self):    
-        self.showFrame(acc)
+    def show_admin_camera_page(self):    
+        self.show_frame(acc)
              
 ################################################################################ 
 class Launch():

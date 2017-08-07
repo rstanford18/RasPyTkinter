@@ -16,7 +16,7 @@ class MainMenuBar(Menu):
         self.menubar = Menu(self.parent)
         self.menubar.config(bg=gv.bckGround)
         filemenu = Menu(self.menubar, tearoff=0)
-        filemenu.add_command(label="Launch Pad", command=self.nav.showLaunchPad)
+        filemenu.add_command(label="Launch Pad", command=self.nav.show_launch_pad)
         filemenu.add_separator()
         
         filemenu.add_command(label="Logout", command=self.callLoginPage)
@@ -25,7 +25,7 @@ class MainMenuBar(Menu):
     
     def callLoginPage(self):
         self.menubar.delete(0,'end')
-        self.nav.showLoginPage()  
+        self.nav.show_login_page()  
     
     def getMenu(self):
         return self.menubar   

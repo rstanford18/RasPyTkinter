@@ -46,7 +46,7 @@ class AdminCameraCfg(tk.Frame):
        
     def han_init_main_frame(self):
         self.mainWidgetSize = 1100
-        self.centerX     = self.ux.getHorizontalCenter(self.mainWidgetSize)
+        self.centerX     = self.ux.get_horizontal_center(self.mainWidgetSize)
         self.frame = tk.Frame(self, height=350, width=self.mainWidgetSize, 
                               highlightbackground='white',
                                highlightcolor='white', highlightthickness=1,)

@@ -17,16 +17,16 @@ class LaunchPadBtn():
     def handleBtnFuncRoute(self, event):
                
         if self.value == 1:
-            self.parent.nav.showOverviewPage()
+            self.parent.nav.show_overview_page()
         
         if self.value == 2:
-            self.parent.nav.showClimatePage()
+            self.parent.nav.show_climate_page()
         
         if self.value == 3:
-            self.parent.nav.showCameraPage()
+            self.parent.nav.show_camera_page()
        
         if self.value == 6: 
-            self.parent.nav.showAdminPage() 
+            self.parent.nav.show_admin_page() 
                  
     def buttonClrEnter(self, event):
         event.widget.config(bg='#B1B8FF', fg='black')
@@ -50,7 +50,7 @@ class AdminLaunchPadBtn():
     def handleBtnFuncRoute(self, event):
               
         if self.value == 1:
-            self.parent.nav.showAdminCameraPage()
+            self.parent.nav.show_admin_camera_page()
         
         if self.value == 2:
             print('')
@@ -98,7 +98,7 @@ class keyBtn():
                 self.parent.keyPadErrorField.set('Password is invalid.')
                 inst.set('')
             else:
-                self.parent.nav.showLaunchPad()
+                self.parent.nav.show_launch_pad()
         else:    
             gf.updateTextVar(inst, str(self.value))
             gf.updateTextVar(self.parent.keyPadHide, '*')

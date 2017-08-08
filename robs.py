@@ -1,4 +1,35 @@
-# from tkinter import *
+import numpy as np
+import multiprocessing
+import time
+import cv2
+
+cap = cv2.VideoCapture('http://94.232.8.10/mjpg/video.mjpg')
+
+def task():
+    time.sleep(.25)
+    ret, frame = cap.read()
+    if ret==True:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        cv2.imshow('frame',gray)
+        time.sleep(.25)
+        if cv2.waitKey(27) & 0xFF == ord('x'):
+            cap.release()
+            return
+        elif cv2.waitKey(27) & 0xFF == ord('q'):
+            cap.release()
+            cv2.destroyAllWindows()
+        else:
+            task()
+
+
+if __name__ == '__main__':
+    jobs = []
+    for i in range(10):
+        p = multiprocessing.Process(target=task)
+        jobs.append(p)
+        p.start()
+
+#  from tkinter import *
 # from tkinter import ttk
 # import time
 # # TOP RIGHT BOTTOM LEFT 
@@ -15,6 +46,7 @@
         
 #     def handleClock(self):
             
+        
 #         self.Clock = self.buildClockUI(1600, 50, 200, 75, font=('times', 30, 'bold'), 
 #                                                     bg=gv.bckGround, fg=self.ClockFg)
                

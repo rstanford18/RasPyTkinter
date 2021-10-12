@@ -7,7 +7,7 @@ matplotlib==2.0.2
 numpy==1.13.1
 olefile==0.44
 opencv==1.0.1
-opencv-python==3.2.0.8
+opencv-python==3.3.1.11
 pigpio==1.35
 Pillow==4.2.1
 PyJWT==1.5.0

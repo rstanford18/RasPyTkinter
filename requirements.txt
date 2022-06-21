@@ -4,7 +4,7 @@ cycler==0.10.0
 gpiozero==1.4.0
 idna==2.5
 matplotlib==2.0.2
-numpy==1.13.1
+numpy==1.22.0
 olefile==0.44
 opencv==1.0.1
 opencv-python==3.2.0.8
